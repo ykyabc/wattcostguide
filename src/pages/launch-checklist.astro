@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Launch Checklist - WattCostGuide";
+const description = "Post-launch checklist for WattCostGuide, including Search Console, sitemap, robots, AdSense readiness, and content quality checks.";
+const checklistSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "WattCostGuide Launch Checklist",
+  description,
+  author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/launch-checklist/",
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="page-header">
+    <p class="eyebrow">Launch</p>
+    <h1>WattCostGuide Launch Checklist</h1>
+    <p>
+      Use this checklist after deployment to confirm the site is crawlable, usable, and ready for early search
+      engine indexing and advertising review.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="checklist-grid">
+      <article class="checklist-panel">
+        <span>Search Console</span>
+        <h2>Submit the sitemap</h2>
+        <ul>
+          <li>Add the property for <strong>https://wattcostguide.com</strong>.</li>
+          <li>Submit <strong>https://wattcostguide.com/sitemap.xml</strong>.</li>
+          <li>Inspect the homepage and a few calculator URLs after indexing begins.</li>
+        </ul>
+      </article>
+
+      <article class="checklist-panel">
+        <span>Crawl basics</span>
+        <h2>Verify robots and canonical URLs</h2>
+        <ul>
+          <li>Check that <strong>/robots.txt</strong> allows crawling.</li>
+          <li>Check that <strong>/sitemap.xml</strong> returns a valid XML response.</li>
+          <li>Confirm canonical URLs use the production domain.</li>
+        </ul>
+      </article>
+
+      <article class="checklist-panel">
+        <span>AdSense</span>
+        <h2>Prepare for review</h2>
+        <ul>
+          <li>Make sure Privacy, Terms, Contact, About, and References pages are reachable.</li>
+          <li>Confirm the contact email is real and monitored.</li>
+          <li>Keep adding original explanations to high-value calculator pages.</li>
+        </ul>
+      </article>
+
+      <article class="checklist-panel">
+        <span>Quality</span>
+        <h2>Check user experience</h2>
+        <ul>
+          <li>Test the calculator on desktop and mobile.</li>
+          <li>Test Light and Dark modes.</li>
+          <li>Search the calculator directory and confirm empty-state behavior.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Recommended priority</h2>
+    <p>
+      Start with Search Console sitemap submission, then verify robots, sitemap, and key URLs. After that,
+      focus on content quality and AdSense readiness so the site has both technical crawlability and useful
+      original page content.
+    </p>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(checklistSchema)} />
+</BaseLayout>
