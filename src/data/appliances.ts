@@ -75,6 +75,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 60 watt fan costs about $0.08 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Most household fans use far less electricity than air conditioners, even when running for many hours.",
     savingTip: "Turn fans off in empty rooms because fans cool people, not the room itself.",
+    detailSections: [
+      {
+        heading: "Why fans are usually inexpensive",
+        body: "Most portable fans use a small electric motor, so their wattage is much lower than appliances that create heat or run a compressor. Even long daily use often costs only a few cents compared with air conditioning.",
+      },
+      {
+        heading: "Fans help most when people are present",
+        body: "A fan does not lower the room temperature by itself. It helps people feel cooler by moving air across skin, so the best savings come from using fans in occupied rooms and raising the air conditioner thermostat when comfortable.",
+      },
+    ],
   },
   {
     name: "Refrigerator",
@@ -295,6 +305,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,500 watt electric kettle costs about $0.04 to run for 9 minutes at $0.17 per kWh.",
     usageNote: "Kettles draw high power, but boiling water usually takes only a few minutes.",
     savingTip: "Boil only the amount of water you plan to use.",
+    detailSections: [
+      {
+        heading: "Short boil times keep costs low",
+        body: "An electric kettle can draw 1,500 watts or more, but it usually runs for only a few minutes. The amount of water you heat has a large effect on the total time and cost.",
+      },
+      {
+        heading: "Avoid reheating extra water",
+        body: "Boiling a full kettle when you only need one cup wastes energy because the kettle heats water that will cool back down. Filling to the amount you plan to use is the simplest way to lower each boil.",
+      },
+    ],
   },
   {
     name: "Coffee Maker",
@@ -354,6 +374,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,000 watt Instant Pot costs about $0.17 to run for 1 hour at $0.17 per kWh.",
     usageNote: "Pressure cookers cycle power after reaching pressure, so the nameplate wattage is a useful upper estimate.",
     savingTip: "Batch cook when practical and avoid long keep-warm periods.",
+    detailSections: [
+      {
+        heading: "Pressure cooking is not full power the whole time",
+        body: "An electric pressure cooker uses more power while heating and building pressure, then cycles the heating element to maintain temperature. The nameplate wattage is a helpful estimate, but actual draw may be lower during part of the cycle.",
+      },
+      {
+        heading: "Keep-warm time can add up",
+        body: "The cooking cycle may be efficient, but leaving food on keep warm for several hours still uses electricity. If you are estimating a full meal, include both cooking time and any long warming period.",
+      },
+    ],
   },
   {
     name: "Chest Freezer",
@@ -367,6 +397,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A chest freezer averaging 150 watts for 8 active hours costs about $0.20 per day at $0.17 per kWh.",
     usageNote: "Freezers cycle throughout the day, and runtime changes with room temperature, age, and lid openings.",
     savingTip: "Keep the freezer reasonably full and place it away from heat sources.",
+    detailSections: [
+      {
+        heading: "Freezers cycle like refrigerators",
+        body: "A chest freezer stays plugged in all day, but the compressor does not usually run nonstop. Active runtime depends on room temperature, insulation, thermostat setting, and how often the lid is opened.",
+      },
+      {
+        heading: "Garage location can raise costs",
+        body: "A freezer in a hot garage or utility room may run more often than one in a conditioned space. Leaving airflow around the unit and keeping it away from direct heat can help reduce compressor runtime.",
+      },
+    ],
   },
   {
     name: "Mini Fridge",
@@ -380,6 +420,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A mini fridge averaging 90 watts for 8 active hours costs about $0.12 per day at $0.17 per kWh.",
     usageNote: "Small fridges cycle like full-size refrigerators, but older compact models can be surprisingly inefficient.",
     savingTip: "Leave airflow around the back and avoid the coldest setting unless needed.",
+    detailSections: [
+      {
+        heading: "Small does not always mean efficient",
+        body: "A mini fridge uses less total power than many full-size refrigerators, but compact models can vary widely. Older dorm-style units may run often if insulation is weak or airflow around the back is blocked.",
+      },
+      {
+        heading: "Estimate active compressor time",
+        body: "Because a mini fridge cycles on and off, enter the estimated active cooling time rather than 24 hours at full wattage. Warmer rooms, frequent door openings, and very cold settings all increase that active time.",
+      },
+    ],
   },
   {
     name: "Heat Pump",
@@ -439,6 +489,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 60 watt ceiling fan costs about $0.08 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Ceiling fans are usually inexpensive to run, especially compared with compressor-based cooling.",
     savingTip: "Set the correct blade direction for the season and turn the fan off when leaving the room.",
+    detailSections: [
+      {
+        heading: "Ceiling fans cost little per hour",
+        body: "Most ceiling fans use a modest amount of power, especially on lower speeds. That makes them inexpensive to run for comfort, but the cost still depends on daily hours and fan speed.",
+      },
+      {
+        heading: "Use fans to reduce cooling demand",
+        body: "A ceiling fan is most useful when it lets you feel comfortable at a higher thermostat setting. Leaving it on in an empty room does not cool the room, so it usually does not provide a benefit when nobody is there.",
+      },
+    ],
   },
   {
     name: "Electric Blanket",
@@ -452,6 +512,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 100 watt electric blanket costs about $0.14 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Electric blankets use low wattage compared with room heaters because they warm a small area directly.",
     savingTip: "Preheat the bed, then lower the setting for overnight comfort.",
+    detailSections: [
+      {
+        heading: "Direct heat keeps wattage low",
+        body: "An electric blanket warms a person or bed directly instead of heating an entire room. That is why its wattage is usually much lower than a space heater.",
+      },
+      {
+        heading: "Settings and runtime still matter",
+        body: "Higher heat settings use more power, and overnight use adds hours. Preheating the bed and lowering the setting after you are comfortable can keep the total cost small.",
+      },
+    ],
   },
   {
     name: "Water Heater",
@@ -488,6 +558,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,800 watt hair dryer costs about $0.05 to run for 10 minutes at $0.17 per kWh.",
     usageNote: "Hair dryers use high wattage, but the short runtime keeps each use relatively inexpensive.",
     savingTip: "Towel dry first and use lower heat when it still works well.",
+    detailSections: [
+      {
+        heading: "High wattage, short session",
+        body: "A hair dryer can use as much power as a small space heater, but most sessions are short. That is why the cost per use is usually low even though the wattage number looks high.",
+      },
+      {
+        heading: "Heat setting changes power draw",
+        body: "The hottest setting generally uses the most electricity because the heating element works harder. Lower heat or cool-air finishing can reduce energy use when it does not add too much drying time.",
+      },
+    ],
   },
   {
     name: "Iron",
@@ -501,6 +581,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,500 watt clothes iron costs about $0.13 to run for 30 minutes at $0.17 per kWh.",
     usageNote: "Irons cycle their heating element to hold temperature, so fabric setting and session length affect cost.",
     savingTip: "Iron clothes in batches so the iron heats up once.",
+    detailSections: [
+      {
+        heading: "Irons cycle after heating up",
+        body: "A clothes iron draws high power while warming up, then cycles the heating element to maintain the selected temperature. Higher fabric settings and steam use can increase energy use during a session.",
+      },
+      {
+        heading: "Batching reduces repeated warm-up",
+        body: "Ironing several items together can be more efficient than turning the iron on for one garment at a time. The cost is still small for short sessions, but repeated warm-ups add avoidable runtime.",
+      },
+    ],
   },
   {
     name: "Vacuum Cleaner",
@@ -514,6 +604,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,000 watt vacuum cleaner costs about $0.09 to run for 30 minutes at $0.17 per kWh.",
     usageNote: "Vacuum power draw varies by motor size, suction mode, and filter condition.",
     savingTip: "Clean filters and empty bins so the vacuum does not work harder than necessary.",
+    detailSections: [
+      {
+        heading: "Motor power varies by model",
+        body: "Vacuum cleaners can range from compact low-power models to stronger upright or canister vacuums. Suction mode, brush roll use, and motor size all affect the wattage you should enter.",
+      },
+      {
+        heading: "Maintenance helps performance",
+        body: "A clogged filter, full bin, or blocked hose can reduce cleaning performance and make a session take longer. Keeping the vacuum clear may not change the rated wattage, but it can reduce wasted runtime.",
+      },
+    ],
   },
   {
     name: "TV",
@@ -573,6 +673,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 250 watt desktop computer costs about $0.34 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Desktop usage varies with hardware, monitor count, workload, and power management settings.",
     savingTip: "Enable sleep settings and turn off monitors when stepping away for long periods.",
+    detailSections: [
+      {
+        heading: "Workload changes desktop power use",
+        body: "A desktop computer may use modest power while browsing or writing, then much more during gaming, video editing, rendering, or other demanding tasks. The power supply rating is not the same as actual constant draw.",
+      },
+      {
+        heading: "Include monitors for a full desk estimate",
+        body: "This calculator estimates the wattage you enter for the computer. If you use one or more monitors, speakers, external drives, or a dock, include those devices separately or add their wattage for a complete setup cost.",
+      },
+    ],
   },
   {
     name: "Electric Vehicle Charger",
@@ -632,6 +742,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "An 800 watt sump pump costs about $0.14 to run for 1 hour at $0.17 per kWh.",
     usageNote: "Sump pumps run intermittently, so rainy periods and groundwater conditions drive total cost.",
     savingTip: "Keep the pit, float switch, and discharge line clear so the pump runs efficiently.",
+    detailSections: [
+      {
+        heading: "Runtime is highly seasonal",
+        body: "A sump pump may sit idle during dry weather and run frequently during storms or snowmelt. For a realistic estimate, use the active pumping time rather than the time the pump is available.",
+      },
+      {
+        heading: "Frequent cycling can signal a problem",
+        body: "If the pump starts and stops constantly, the pit size, float switch, check valve, or drainage conditions may be affecting runtime. A clear discharge line and working check valve can help avoid unnecessary pumping.",
+      },
+    ],
   },
   {
     name: "Aquarium Heater",
@@ -645,5 +765,15 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 100 watt aquarium heater costs about $0.14 to run for 8 active hours at $0.17 per kWh.",
     usageNote: "Aquarium heaters cycle on and off based on tank size, room temperature, and target water temperature.",
     savingTip: "Use a properly sized heater and reduce drafts around the tank.",
+    detailSections: [
+      {
+        heading: "Tank and room temperature drive runtime",
+        body: "An aquarium heater cycles to maintain water temperature. Larger tanks, cooler rooms, open tops, and higher target temperatures can all make the heater run for more active hours each day.",
+      },
+      {
+        heading: "Sizing affects stability",
+        body: "A properly sized heater can maintain temperature without excessive cycling. If the heater is too small for the tank or room conditions, it may run for long periods and still struggle to hold the target temperature.",
+      },
+    ],
   },
 ];
