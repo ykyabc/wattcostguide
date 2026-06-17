@@ -1,8 +1,34 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
 
 const title = "Appliance Energy Saving Tips - WattCostGuide";
 const description = "Practical appliance energy saving tips for lowering household electricity costs without complicated equipment.";
+const relatedCalculatorSlugs = [
+  "space-heater-cost-calculator",
+  "dryer-electricity-cost-calculator",
+  "pool-pump-electricity-cost-calculator",
+  "portable-ac-electricity-cost-calculator",
+];
+const relatedCalculatorLinks = appliances
+  .filter((appliance) => relatedCalculatorSlugs.includes(appliance.slug))
+  .map((appliance) => ({
+    eyebrow: appliance.category,
+    title: `${appliance.name} Cost Calculator`,
+    description: appliance.savingTip,
+    href: `/calculators/${appliance.slug}/`,
+  }));
+const relatedGuideLinks = guides
+  .filter((guide) => guide.slug !== "appliance-energy-saving-tips")
+  .slice(0, 3)
+  .map((guide) => ({
+    eyebrow: guide.category,
+    title: guide.title,
+    description: guide.description,
+    href: `/guides/${guide.slug}/`,
+  }));
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -59,6 +85,18 @@ const articleSchema = {
       space heater, air conditioner, dryer, or water heater can matter more than unplugging a low-wattage device.
     </p>
   </section>
+
+  <RelatedLinks
+    title="Prioritize high-impact appliances"
+    description="Start with calculators for appliances where runtime, heat, or motor load can make a bigger difference."
+    links={relatedCalculatorLinks}
+  />
+
+  <RelatedLinks
+    title="Related cost guides"
+    description="Use these guides to understand the numbers behind the savings."
+    links={relatedGuideLinks}
+  />
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </BaseLayout>

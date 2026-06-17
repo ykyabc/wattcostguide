@@ -1,8 +1,34 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
 
 const title = "Electricity Rate Cost per kWh - WattCostGuide";
 const description = "Learn what cost per kWh means, where to find your electricity rate, and how it changes appliance running cost estimates.";
+const relatedCalculatorSlugs = [
+  "air-conditioner-cost-calculator",
+  "electric-water-heater-cost-calculator",
+  "ev-charger-electricity-cost-calculator",
+  "clothes-iron-electricity-cost-calculator",
+];
+const relatedCalculatorLinks = appliances
+  .filter((appliance) => relatedCalculatorSlugs.includes(appliance.slug))
+  .map((appliance) => ({
+    eyebrow: appliance.category,
+    title: `${appliance.name} Cost Calculator`,
+    description: `Try different $/kWh rates with a ${appliance.wattsTypical}W estimate`,
+    href: `/calculators/${appliance.slug}/`,
+  }));
+const relatedGuideLinks = guides
+  .filter((guide) => guide.slug !== "electricity-rate-cost-per-kwh")
+  .slice(0, 3)
+  .map((guide) => ({
+    eyebrow: guide.category,
+    title: guide.title,
+    description: guide.description,
+    href: `/guides/${guide.slug}/`,
+  }));
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -79,6 +105,18 @@ const articleSchema = {
       use the rate that matches when the appliance runs.
     </p>
   </section>
+
+  <RelatedLinks
+    title="Try different rates in calculators"
+    description="These appliance calculators make it easy to compare lower, average, and high electricity rates."
+    links={relatedCalculatorLinks}
+  />
+
+  <RelatedLinks
+    title="Related electricity guides"
+    description="Learn how rate connects with watts, kWh, and appliance running cost."
+    links={relatedGuideLinks}
+  />
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </BaseLayout>

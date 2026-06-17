@@ -1,9 +1,34 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
 
 const title = "Average Appliance Wattage Guide - WattCostGuide";
 const description = "Compare typical wattage ranges for common household appliances and learn how wattage affects electricity cost.";
+const relatedCalculatorSlugs = [
+  "refrigerator-electricity-cost-calculator",
+  "air-fryer-electricity-cost-calculator",
+  "desktop-computer-electricity-cost-calculator",
+  "ev-charger-electricity-cost-calculator",
+];
+const relatedCalculatorLinks = appliances
+  .filter((appliance) => relatedCalculatorSlugs.includes(appliance.slug))
+  .map((appliance) => ({
+    eyebrow: appliance.category,
+    title: `${appliance.name} Cost Calculator`,
+    description: `${appliance.wattsMin}W-${appliance.wattsMax}W common range`,
+    href: `/calculators/${appliance.slug}/`,
+  }));
+const relatedGuideLinks = guides
+  .filter((guide) => guide.slug !== "average-appliance-wattage")
+  .slice(0, 3)
+  .map((guide) => ({
+    eyebrow: guide.category,
+    title: guide.title,
+    description: guide.description,
+    href: `/guides/${guide.slug}/`,
+  }));
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -65,6 +90,18 @@ const articleSchema = {
       For cost, combine watts with hours used and your electricity rate.
     </p>
   </section>
+
+  <RelatedLinks
+    title="Compare wattage in calculators"
+    description="Use these calculators to see how different wattage ranges affect daily and monthly cost."
+    links={relatedCalculatorLinks}
+  />
+
+  <RelatedLinks
+    title="Related planning guides"
+    description="Use these guides to turn wattage into kWh, cost, and savings decisions."
+    links={relatedGuideLinks}
+  />
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </BaseLayout>

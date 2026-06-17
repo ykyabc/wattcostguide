@@ -1,8 +1,34 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
 
 const title = "Watts to kWh Calculator and Formula - WattCostGuide";
 const description = "Learn how to convert watts and hours into kilowatt-hours for appliance electricity cost estimates.";
+const relatedCalculatorSlugs = [
+  "space-heater-cost-calculator",
+  "air-conditioner-cost-calculator",
+  "refrigerator-electricity-cost-calculator",
+  "dryer-electricity-cost-calculator",
+];
+const relatedCalculatorLinks = appliances
+  .filter((appliance) => relatedCalculatorSlugs.includes(appliance.slug))
+  .map((appliance) => ({
+    eyebrow: appliance.category,
+    title: `${appliance.name} Cost Calculator`,
+    description: `${appliance.wattsTypical}W typical estimate`,
+    href: `/calculators/${appliance.slug}/`,
+  }));
+const relatedGuideLinks = guides
+  .filter((guide) => guide.slug !== "watts-to-kwh")
+  .slice(0, 3)
+  .map((guide) => ({
+    eyebrow: guide.category,
+    title: guide.title,
+    description: guide.description,
+    href: `/guides/${guide.slug}/`,
+  }));
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -31,6 +57,18 @@ const articleSchema = {
     <pre><code>kWh = Watts / 1000 x Hours Used</code></pre>
     <p>A 1,500 watt appliance running for 4 hours uses 6 kWh.</p>
   </section>
+
+  <RelatedLinks
+    title="Try the formula with real appliances"
+    description="Open a calculator and adjust watts, hours, and electricity rate for a practical estimate."
+    links={relatedCalculatorLinks}
+  />
+
+  <RelatedLinks
+    title="Next guides to read"
+    description="Continue with the cost formula, appliance wattage, and electricity rate basics."
+    links={relatedGuideLinks}
+  />
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </BaseLayout>

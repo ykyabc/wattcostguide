@@ -1,0 +1,36 @@
+---
+type RelatedLink = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+};
+
+const {
+  title,
+  description,
+  links,
+} = Astro.props as {
+  title: string;
+  description: string;
+  links: RelatedLink[];
+};
+---
+
+{links.length > 0 && (
+  <section class="section">
+    <div class="section-heading">
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+    <div class="card-grid">
+      {links.map((link) => (
+        <a class="card" href={link.href}>
+          <span>{link.eyebrow}</span>
+          <strong>{link.title}</strong>
+          <small>{link.description}</small>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

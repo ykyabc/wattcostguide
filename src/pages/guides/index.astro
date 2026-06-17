@@ -1,7 +1,23 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
 
+const popularCalculatorSlugs = [
+  "space-heater-cost-calculator",
+  "air-conditioner-cost-calculator",
+  "refrigerator-electricity-cost-calculator",
+  "dryer-electricity-cost-calculator",
+];
+const popularCalculatorLinks = appliances
+  .filter((appliance) => popularCalculatorSlugs.includes(appliance.slug))
+  .map((appliance) => ({
+    eyebrow: appliance.category,
+    title: `${appliance.name} Cost Calculator`,
+    description: `${appliance.wattsTypical}W typical estimate`,
+    href: `/calculators/${appliance.slug}/`,
+  }));
 const itemListSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -40,6 +56,12 @@ const itemListSchema = {
       </a>
     </div>
   </section>
+
+  <RelatedLinks
+    title="Popular appliance calculators"
+    description="After reading the basics, use a calculator to estimate a real appliance cost."
+    links={popularCalculatorLinks}
+  />
 
   <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
 </BaseLayout>

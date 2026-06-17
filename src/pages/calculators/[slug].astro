@@ -1,7 +1,9 @@
 ---
 import ApplianceCostCalculator from "../../components/ApplianceCostCalculator.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
 import { categorySlug } from "../../data/categories";
 
 export function getStaticPaths() {
@@ -36,6 +38,12 @@ const usageScenarios = [
 const formatMoney = (value: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 const calculatorCountLabel = (count: number) => `${count} calculator${count === 1 ? "" : "s"}`;
+const guideLinks = guides.slice(0, 5).map((guide) => ({
+  eyebrow: guide.category,
+  title: guide.title,
+  description: guide.description,
+  href: `/guides/${guide.slug}/`,
+}));
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -304,6 +312,12 @@ const breadcrumbSchema = {
       ))}
     </div>
   </section>
+
+  <RelatedLinks
+    title="Electricity cost guides"
+    description="Use these guides to understand the formula, wattage, rates, and ways to lower appliance costs."
+    links={guideLinks}
+  />
 
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />

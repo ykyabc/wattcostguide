@@ -1,8 +1,34 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
 
 const title = "How to Calculate Electricity Cost - WattCostGuide";
 const description = "Learn the simple formula for estimating appliance electricity cost from watts, hours used, and electricity rate.";
+const relatedCalculatorSlugs = [
+  "space-heater-cost-calculator",
+  "electric-oven-cost-calculator",
+  "gaming-pc-electricity-cost-calculator",
+  "pool-pump-electricity-cost-calculator",
+];
+const relatedCalculatorLinks = appliances
+  .filter((appliance) => relatedCalculatorSlugs.includes(appliance.slug))
+  .map((appliance) => ({
+    eyebrow: appliance.category,
+    title: `${appliance.name} Cost Calculator`,
+    description: `${appliance.wattsTypical}W typical estimate`,
+    href: `/calculators/${appliance.slug}/`,
+  }));
+const relatedGuideLinks = guides
+  .filter((guide) => guide.slug !== "how-to-calculate-electricity-cost")
+  .slice(0, 3)
+  .map((guide) => ({
+    eyebrow: guide.category,
+    title: guide.title,
+    description: guide.description,
+    href: `/guides/${guide.slug}/`,
+  }));
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -75,6 +101,18 @@ const articleSchema = {
       after heating or cooling reaches a target. The calculator is best used as a planning estimate.
     </p>
   </section>
+
+  <RelatedLinks
+    title="Use the formula in a calculator"
+    description="These calculators show how wattage, hours, and rate change the final cost."
+    links={relatedCalculatorLinks}
+  />
+
+  <RelatedLinks
+    title="Related electricity guides"
+    description="Learn the pieces behind the formula before comparing more appliances."
+    links={relatedGuideLinks}
+  />
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </BaseLayout>
