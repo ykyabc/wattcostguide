@@ -226,6 +226,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,100 watt microwave costs about $0.05 to run for 15 minutes at $0.17 per kWh.",
     usageNote: "Microwaves use moderate to high power, but cooking sessions are usually very short.",
     savingTip: "Use microwave-safe covers and right-sized containers to heat food faster.",
+    detailSections: [
+      {
+        heading: "Why microwave cost is usually low",
+        body: "Microwaves can draw more than 1,000 watts, but most cooking or reheating sessions only last a few minutes. Short runtime is the main reason the cost per use is usually only a few cents.",
+      },
+      {
+        heading: "When a microwave can save energy",
+        body: "For reheating leftovers, warming drinks, or cooking small portions, a microwave often uses less total energy than heating a full-size oven or stovetop pan. The advantage shrinks when food needs long cooking time or multiple batches.",
+      },
+    ],
   },
   {
     name: "Dishwasher",
@@ -239,6 +249,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,800 watt dishwasher costs about $0.46 for a 1.5 hour cycle at $0.17 per kWh.",
     usageNote: "Dishwasher electricity use depends heavily on water heating and heated drying settings.",
     savingTip: "Run full loads and use air dry or energy saver modes when available.",
+    detailSections: [
+      {
+        heading: "Water heating drives much of the cost",
+        body: "Dishwashers use electricity for pumps, controls, and drying, but water heating can be the biggest part of the energy use. High-temperature wash and sanitize modes may increase the cost of a cycle.",
+      },
+      {
+        heading: "Heated dry can change the estimate",
+        body: "A heated drying phase can add noticeable energy use after the wash is finished. If your dishwasher has air dry or energy saver dry, using that setting can lower electricity use without changing the wash cycle itself.",
+      },
+    ],
   },
   {
     name: "Washing Machine",
@@ -252,6 +272,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "An 800 watt washing machine costs about $0.14 to run for 1 hour at $0.17 per kWh.",
     usageNote: "Washers use less electricity than dryers, especially when washing with cold water.",
     savingTip: "Wash full loads with cold water whenever fabric care allows.",
+    detailSections: [
+      {
+        heading: "Cold water makes a major difference",
+        body: "The washer motor usually uses far less energy than heating water. If hot water is supplied by an electric water heater, warm or hot cycles can shift much of the real cost to water heating rather than the washing machine alone.",
+      },
+      {
+        heading: "Spin speed affects drying cost",
+        body: "A faster final spin can remove more water from clothes before they go into the dryer. That may not change washer electricity much, but it can reduce dryer runtime, which is often the more expensive part of laundry.",
+      },
+    ],
   },
   {
     name: "Electric Kettle",
@@ -278,6 +308,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,000 watt coffee maker costs about $0.09 to run for 30 minutes at $0.17 per kWh.",
     usageNote: "Brewing uses the most power, while warming plates can add cost if left on.",
     savingTip: "Turn off the warming plate or use an insulated carafe.",
+    detailSections: [
+      {
+        heading: "Brewing and warming are different",
+        body: "A drip coffee maker uses the most energy while heating water for brewing. After brewing, a warming plate may use less power but can still add cost if it stays on for hours.",
+      },
+      {
+        heading: "Single-serve machines vary",
+        body: "Single-serve coffee makers usually run for short bursts, so each cup may use little energy. If the machine keeps water hot between cups, standby or ready mode can become part of the total daily use.",
+      },
+    ],
   },
   {
     name: "Toaster Oven",
@@ -291,6 +331,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,400 watt toaster oven costs about $0.12 to run for 30 minutes at $0.17 per kWh.",
     usageNote: "Toaster ovens can be cheaper than full ovens for small meals because they heat a smaller space.",
     savingTip: "Use the toaster oven for small portions instead of preheating a large oven.",
+    detailSections: [
+      {
+        heading: "Why size matters",
+        body: "A toaster oven heats a much smaller chamber than a full-size oven. For small meals, snacks, or reheating, that can reduce preheat time and total runtime.",
+      },
+      {
+        heading: "Batch cooking can change the comparison",
+        body: "If you need several batches, a toaster oven may run long enough that the savings are smaller. For a large meal, a full oven can sometimes be more practical because it cooks more food at once.",
+      },
+    ],
   },
   {
     name: "Instant Pot",
@@ -343,6 +393,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 2,500 watt heat pump costs about $3.40 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Heat pump power depends on system size, outdoor temperature, thermostat setpoint, and whether backup heat runs.",
     savingTip: "Use steady thermostat settings and maintain filters so the system can run efficiently.",
+    detailSections: [
+      {
+        heading: "Outdoor temperature affects runtime",
+        body: "Heat pumps usually work efficiently in mild weather, but colder outdoor temperatures can make them run longer. In very cold conditions, some systems may use backup electric heat, which can raise electricity use quickly.",
+      },
+      {
+        heading: "Steady settings are often better",
+        body: "Large thermostat setbacks can sometimes trigger long recovery periods or backup heat. A steady, reasonable setpoint may keep the system operating more efficiently, especially during cold weather.",
+      },
+    ],
   },
   {
     name: "Portable AC",
@@ -356,6 +416,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,200 watt portable AC costs about $1.63 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Portable AC units can run often in hot rooms, especially single-hose models or poorly sealed setups.",
     savingTip: "Seal the window kit carefully and keep the exhaust hose short and straight.",
+    detailSections: [
+      {
+        heading: "Portable AC setup matters",
+        body: "A portable air conditioner can lose efficiency if the window kit leaks, the exhaust hose gets hot, or the hose is long and bent. Those setup issues can make the compressor run longer.",
+      },
+      {
+        heading: "Single-hose vs dual-hose units",
+        body: "Single-hose models may pull conditioned indoor air out of the room as they exhaust heat. Dual-hose designs can reduce that effect, but the actual cost still depends on room size, heat load, and runtime.",
+      },
+    ],
   },
   {
     name: "Ceiling Fan",
@@ -457,6 +527,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 120 watt TV costs about $0.10 to run for 5 hours at $0.17 per kWh.",
     usageNote: "TV power use changes with screen size, brightness, display technology, and picture mode.",
     savingTip: "Lower brightness and enable automatic power saving when the picture still looks good.",
+    detailSections: [
+      {
+        heading: "Screen size and brightness matter",
+        body: "A large bright TV can use much more electricity than a smaller screen at moderate brightness. Vivid or store-demo picture modes often use more power than standard or energy-saving modes.",
+      },
+      {
+        heading: "Streaming devices add a little more",
+        body: "This calculator estimates the TV wattage you enter. If you use a streaming box, game console, soundbar, or receiver, add those devices separately for a full entertainment setup estimate.",
+      },
+    ],
   },
   {
     name: "Laptop",
@@ -470,6 +550,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 65 watt laptop costs about $0.09 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Laptops usually use modest electricity, with higher draw while charging, gaming, rendering, or using maximum brightness.",
     savingTip: "Use sleep mode, reduce brightness, and unplug accessories you do not need.",
+    detailSections: [
+      {
+        heading: "Charging is not the same as constant draw",
+        body: "A laptop power adapter rating is a maximum output, not necessarily what the laptop uses all day. Power draw is usually higher while charging the battery or doing demanding work, and lower during light browsing or writing.",
+      },
+      {
+        heading: "External displays can double the setup",
+        body: "The laptop itself may be inexpensive to run, but external monitors, docks, speakers, and other accessories can add to the total. For a work-from-home setup, include the whole desk setup if you want a realistic estimate.",
+      },
+    ],
   },
   {
     name: "Desktop Computer",
@@ -519,6 +609,16 @@ export const appliances: Appliance[] = [
     shortAnswer: "A 1,500 watt pool pump costs about $2.04 to run for 8 hours at $0.17 per kWh.",
     usageNote: "Pool pump costs can add up because pumps may run for many hours per day during pool season.",
     savingTip: "Use a variable-speed pump or shorter schedules when water quality still stays clear.",
+    detailSections: [
+      {
+        heading: "Long schedules make pool pumps expensive",
+        body: "A pool pump may not have the highest wattage in the home, but it can run for many hours per day. That combination of moderate-to-high wattage and long runtime is why seasonal costs can add up.",
+      },
+      {
+        heading: "Variable-speed pumps can reduce cost",
+        body: "Variable-speed pumps can move water at lower power for longer periods, which may use less energy than running a single-speed pump at full power. The best schedule depends on pool size, equipment, and water quality needs.",
+      },
+    ],
   },
   {
     name: "Sump Pump",
