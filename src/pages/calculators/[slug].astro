@@ -1,6 +1,7 @@
 ---
 import ApplianceCostCalculator from "../../components/ApplianceCostCalculator.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
@@ -14,7 +15,8 @@ export function getStaticPaths() {
 }
 
 const { appliance } = Astro.props;
-const pageTitle = `${appliance.name} Cost Calculator: Watts, kWh & Running Cost`;
+const titleApplianceName = appliance.name === "Electric Vehicle Charger" ? "EV Charger" : appliance.name;
+const pageTitle = `${titleApplianceName} Cost Calculator: Watts, kWh & Running Cost`;
 const categoryUrl = `/calculators/category/${categorySlug(appliance.category)}/`;
 const exampleDailyCost = (appliance.wattsTypical / 1000) * appliance.defaultHoursPerDay * appliance.defaultRate;
 const exampleMonthlyCost = exampleDailyCost * 30;
@@ -122,6 +124,8 @@ const breadcrumbSchema = {
     <h1>{appliance.name} Electricity Cost Calculator</h1>
     <p>{appliance.shortAnswer}</p>
   </section>
+
+  <EditorialNote />
 
   <section class="section two-column" data-live-estimate>
     <ApplianceCostCalculator

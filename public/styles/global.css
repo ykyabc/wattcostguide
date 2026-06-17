@@ -435,6 +435,20 @@ input {
   color: var(--muted);
 }
 
+.editorial-note {
+  display: grid;
+  gap: 4px;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: var(--panel-soft);
+  color: var(--muted);
+  padding: 14px 18px;
+}
+
+.editorial-note strong {
+  color: var(--ink);
+}
+
 .link-panel-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

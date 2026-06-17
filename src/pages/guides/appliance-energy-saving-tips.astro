@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
@@ -53,6 +54,8 @@ const articleSchema = {
     <p>Most appliance savings come from reducing runtime, choosing efficient settings, and maintaining equipment so it does not work harder than necessary.</p>
   </section>
 
+  <EditorialNote note="Savings depend on your appliance, habits, home conditions, and utility rate. Use calculators to compare the changes that matter most." />
+
   <section class="section">
     <div class="card-grid">
       <article class="card">
@@ -84,6 +87,102 @@ const articleSchema = {
       Start with appliances that combine high wattage with long runtime. A small change to a pool pump,
       space heater, air conditioner, dryer, or water heater can matter more than unplugging a low-wattage device.
     </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Focus on runtime first</h2>
+    <p>
+      The simplest way to reduce appliance electricity cost is to reduce the number of hours a high-use
+      appliance runs. This does not always mean using it less; sometimes it means changing settings, improving
+      airflow, cleaning filters, sealing gaps, or using a timer so the appliance does the same job in fewer
+      active hours.
+    </p>
+    <p>
+      Runtime is especially important for heating and cooling equipment, dehumidifiers, pool pumps, and
+      appliances with heating elements. A 1,500 watt device running one fewer hour per day saves 1.5 kWh each
+      day. At $0.17/kWh, that is about $7.65 per month.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Where savings usually come from</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Appliance group</th>
+            <th>Best first action</th>
+            <th>Why it helps</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Heating and cooling</td>
+            <td>Clean filters, seal leaks, and use reasonable thermostat settings.</td>
+            <td>Reduces long compressor or heater runtime.</td>
+          </tr>
+          <tr>
+            <td>Laundry</td>
+            <td>Use sensor dry, clean lint filters, and wash full loads.</td>
+            <td>Dryers are high-wattage, so shorter cycles matter.</td>
+          </tr>
+          <tr>
+            <td>Kitchen appliances</td>
+            <td>Use the right-sized appliance for the job.</td>
+            <td>Small cooking tasks may not need a full-size oven.</td>
+          </tr>
+          <tr>
+            <td>Electronics</td>
+            <td>Enable sleep settings and turn off displays when idle.</td>
+            <td>Reduces long low-to-moderate power draw.</td>
+          </tr>
+          <tr>
+            <td>Outdoor equipment</td>
+            <td>Review pump schedules and timers.</td>
+            <td>Long daily schedules can create large seasonal costs.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Use lower settings when they still work</h2>
+    <p>
+      Many appliances have settings that trade speed or intensity for energy use. A lower fan speed, lower
+      heat setting, eco mode, air-dry setting, or lower brightness can reduce cost when it still gives an
+      acceptable result.
+    </p>
+    <p>
+      The key is to avoid settings that make the appliance run so much longer that savings disappear. For
+      example, a lower dryer heat setting may help delicate clothing, but if it doubles runtime, the energy
+      benefit may be smaller than expected.
+    </p>
+  </section>
+
+  <section class="section faq-list">
+    <h2>Appliance energy saving FAQ</h2>
+    <details open>
+      <summary>Which appliances should I check first?</summary>
+      <p>
+        Start with appliances that use heat, run compressors, or operate for many hours: space heaters, air
+        conditioners, dryers, water heaters, dehumidifiers, pool pumps, and EV chargers.
+      </p>
+    </details>
+    <details>
+      <summary>Does unplugging small devices save a lot?</summary>
+      <p>
+        It can help in some homes, but small standby loads are often less important than high-wattage or
+        long-runtime appliances. Use calculators to compare the biggest opportunities first.
+      </p>
+    </details>
+    <details>
+      <summary>Do efficient appliances always save money?</summary>
+      <p>
+        Efficient appliances can lower energy use, but savings depend on purchase price, usage, utility rate,
+        and how often the appliance runs. Estimate operating cost before assuming the payback is quick.
+      </p>
+    </details>
   </section>
 
   <RelatedLinks

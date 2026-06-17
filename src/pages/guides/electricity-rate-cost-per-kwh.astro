@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
@@ -53,6 +54,8 @@ const articleSchema = {
     <p>Your electricity rate is the price you pay for each kilowatt-hour of energy. It is the number that turns energy use into cost.</p>
   </section>
 
+  <EditorialNote note="Electricity rates vary by utility, plan, location, season, and time of day. Use your own bill when possible." />
+
   <section class="section article-block">
     <h2>Where to find your rate</h2>
     <p>
@@ -64,6 +67,20 @@ const articleSchema = {
       This gives an effective average rate.
     </p>
     <pre><code>Average Rate = Total Electricity Charges / Total kWh Used</code></pre>
+  </section>
+
+  <section class="section article-block">
+    <h2>Supply rate vs effective rate</h2>
+    <p>
+      Some utility bills show a low-looking supply rate, but the final bill also includes delivery charges,
+      riders, taxes, fixed fees, or other line items. If you only use the supply rate, you may underestimate
+      the real cost of running an appliance.
+    </p>
+    <p>
+      For household planning, an effective average rate is often better. Add the electricity-related charges
+      on the bill, divide by total kWh used, and use that number in the calculator. This will not perfectly
+      model every fee, but it usually gives a more realistic comparison between appliances.
+    </p>
   </section>
 
   <section class="section">
@@ -104,6 +121,83 @@ const articleSchema = {
       Some utilities charge different rates by time of day. If your plan has peak and off-peak rates,
       use the rate that matches when the appliance runs.
     </p>
+  </section>
+
+  <section class="section">
+    <h2>Which rate should you enter?</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Situation</th>
+            <th>Rate to use</th>
+            <th>Why it helps</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Flat-rate plan</td>
+            <td>Your average $/kWh</td>
+            <td>Simple and usually good enough for daily estimates.</td>
+          </tr>
+          <tr>
+            <td>Time-of-use plan</td>
+            <td>The rate for the time the appliance runs</td>
+            <td>Useful for EV charging, laundry, dishwashing, and overnight loads.</td>
+          </tr>
+          <tr>
+            <td>Hard-to-read bill</td>
+            <td>Total charges divided by total kWh</td>
+            <td>Creates a practical effective rate for comparisons.</td>
+          </tr>
+          <tr>
+            <td>Solar or net metering</td>
+            <td>Your marginal or exported-energy value if known</td>
+            <td>Costs can depend on when power is used and how credits are applied.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Why rate changes matter</h2>
+    <p>
+      Electricity rate has a direct one-to-one effect on estimated cost. If your rate doubles, the estimated
+      appliance cost doubles for the same watts and hours. That is why the same 10 kWh of appliance use costs
+      $1.20 at $0.12/kWh, $1.70 at $0.17/kWh, and $2.50 at $0.25/kWh.
+    </p>
+    <p>
+      Rate differences are especially important for appliances that use many kWh per month, such as space
+      heaters, air conditioners, dryers, water heaters, pool pumps, and EV chargers. Small changes in rate
+      may not matter much for a laptop or fan, but they can become noticeable for high-use appliances.
+    </p>
+  </section>
+
+  <section class="section faq-list">
+    <h2>Electricity rate FAQ</h2>
+    <details open>
+      <summary>What is a good default electricity rate?</summary>
+      <p>
+        WattCostGuide uses $0.17/kWh as a practical default for examples, but your own bill is better. Rates
+        vary by state, utility, plan, season, and time of day.
+      </p>
+    </details>
+    <details>
+      <summary>Should I include fixed monthly fees?</summary>
+      <p>
+        For comparing appliance choices, fixed monthly fees are usually less important because you pay them
+        whether or not one appliance runs. For a whole-bill average rate, including them can show the full
+        cost of electricity service.
+      </p>
+    </details>
+    <details>
+      <summary>Why is my bill rate different from my advertised rate?</summary>
+      <p>
+        Advertised rates may show only part of the bill. Delivery charges, taxes, riders, and other fees can
+        make the effective cost per kWh higher than the supply rate alone.
+      </p>
+    </details>
   </section>
 
   <RelatedLinks

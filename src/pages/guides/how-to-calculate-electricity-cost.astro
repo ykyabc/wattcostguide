@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
@@ -53,12 +54,33 @@ const articleSchema = {
     <p>To estimate appliance running cost, convert watts to kilowatts, multiply by hours used, then multiply by your electricity rate.</p>
   </section>
 
+  <EditorialNote note="This guide uses the same cost formula as the appliance calculators. Actual bills may include taxes, fees, delivery charges, and time-of-use pricing." />
+
   <section class="section article-block">
     <h2>The formula</h2>
     <pre><code>Cost = Watts / 1000 x Hours Used x Electricity Rate</code></pre>
     <p>
       Watts measure power. Kilowatt-hours measure energy over time. Your electric bill usually charges by
       kilowatt-hour, written as kWh.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Step-by-step method</h2>
+    <p>
+      Start by finding the appliance wattage. This may be printed on a label, listed in the manual, or shown
+      in product specifications. If the device lists amps and volts instead of watts, multiply amps by volts
+      to estimate watts.
+    </p>
+    <p>
+      Next, estimate how many hours the appliance actually runs. For a hair dryer or microwave, this may be
+      minutes per use. For a space heater or air conditioner, it may be several hours. For appliances that
+      cycle on and off, such as refrigerators or dehumidifiers, estimate active runtime rather than the full
+      time plugged in.
+    </p>
+    <p>
+      Finally, use your electricity rate. A simple estimate can use the average cost per kWh from your bill.
+      If you have time-of-use pricing, use the rate that applies when the appliance usually runs.
     </p>
   </section>
 
@@ -100,6 +122,77 @@ const articleSchema = {
       Actual cost can change because appliances cycle on and off, use different settings, or draw less power
       after heating or cooling reaches a target. The calculator is best used as a planning estimate.
     </p>
+  </section>
+
+  <section class="section">
+    <h2>Daily, monthly, and yearly cost</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>How to estimate</th>
+            <th>Example from $1.02/day</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Daily</td>
+            <td>Watts / 1000 x hours x rate</td>
+            <td>$1.02</td>
+          </tr>
+          <tr>
+            <td>Monthly</td>
+            <td>Daily cost x 30</td>
+            <td>$30.60</td>
+          </tr>
+          <tr>
+            <td>Yearly</td>
+            <td>Daily cost x 365</td>
+            <td>$372.30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Common mistakes to avoid</h2>
+    <p>
+      The most common mistake is mixing up watts and kilowatt-hours. Watts describe the appliance's power
+      draw. kWh describes energy used over time. Another common mistake is using 24 hours for a device that
+      cycles. That can overestimate the cost of refrigerators, freezers, heat pumps, and some water heaters.
+    </p>
+    <p>
+      It is also easy to overlook utility rate details. Some bills split electricity into supply, delivery,
+      taxes, and fees. For everyday planning, an effective average rate from your bill is often more useful
+      than only the supply rate.
+    </p>
+  </section>
+
+  <section class="section faq-list">
+    <h2>Electricity cost FAQ</h2>
+    <details open>
+      <summary>What is the easiest way to estimate appliance cost?</summary>
+      <p>
+        Use the appliance wattage, hours used, and your electricity rate. Divide watts by 1,000 to get
+        kilowatts, multiply by hours, then multiply by cost per kWh.
+      </p>
+    </details>
+    <details>
+      <summary>Why does my actual bill not match the calculator exactly?</summary>
+      <p>
+        The calculator estimates appliance energy cost only. A bill can include other appliances, taxes,
+        delivery charges, demand charges, seasonal rate changes, or time-of-use pricing.
+      </p>
+    </details>
+    <details>
+      <summary>Can I calculate cost from amps instead of watts?</summary>
+      <p>
+        Yes. Estimate watts by multiplying amps by volts, then use the same formula. For example, 10 amps at
+        120 volts is about 1,200 watts.
+      </p>
+    </details>
   </section>
 
   <RelatedLinks

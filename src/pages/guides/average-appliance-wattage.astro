@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
@@ -53,6 +54,8 @@ const articleSchema = {
     <p>Appliance wattage is the starting point for estimating electricity cost, but the best number is always the one printed on your own device.</p>
   </section>
 
+  <EditorialNote note="Wattage ranges are practical planning estimates. Product labels, owner manuals, and energy monitors are better for a specific appliance." />
+
   <section class="section article-block">
     <h2>Common wattage ranges</h2>
     <p>
@@ -89,6 +92,89 @@ const articleSchema = {
       A high-wattage appliance used for a few minutes can cost less than a low-wattage appliance running all day.
       For cost, combine watts with hours used and your electricity rate.
     </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>How to choose the right wattage number</h2>
+    <p>
+      The best wattage number is the one printed on your own appliance. Look for a label on the back, bottom,
+      door frame, power adapter, or product manual. Some devices list watts directly, while others list volts
+      and amps. If you see amps and volts, multiply them to estimate watts.
+    </p>
+    <pre><code>Watts = Volts x Amps</code></pre>
+    <p>
+      For example, a device rated at 120 volts and 10 amps can draw up to about 1,200 watts. That rating may
+      represent a maximum rather than constant use, but it is still a useful starting point when no better
+      measurement is available.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>High-wattage vs long-runtime appliances</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Appliance type</th>
+            <th>Why wattage matters</th>
+            <th>What to check next</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Heating appliances</td>
+            <td>Space heaters, dryers, ovens, and water heaters can draw high power.</td>
+            <td>Estimate runtime carefully because cost rises quickly.</td>
+          </tr>
+          <tr>
+            <td>Cooling appliances</td>
+            <td>AC units and heat pumps may run for many hours in hot or cold weather.</td>
+            <td>Check compressor runtime, thermostat setting, and outdoor temperature.</td>
+          </tr>
+          <tr>
+            <td>Always-on appliances</td>
+            <td>Refrigerators and freezers use energy every day, but cycle on and off.</td>
+            <td>Use active compressor hours or annual kWh if available.</td>
+          </tr>
+          <tr>
+            <td>Electronics</td>
+            <td>Computers and TVs vary by workload, brightness, and accessories.</td>
+            <td>Include monitors, consoles, speakers, and idle time when relevant.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>When annual kWh is better than watts</h2>
+    <p>
+      Some appliances, especially refrigerators, freezers, dishwashers, and clothes washers, may list annual
+      kWh on an EnergyGuide label. If you have that number, it can be more useful than a single wattage value
+      because it already accounts for typical cycling or test-cycle behavior.
+    </p>
+    <p>
+      To estimate yearly cost from annual kWh, multiply the annual kWh by your electricity rate. To estimate
+      monthly cost, divide the yearly result by 12.
+    </p>
+  </section>
+
+  <section class="section faq-list">
+    <h2>Average appliance wattage FAQ</h2>
+    <details open>
+      <summary>Is typical wattage the same as actual wattage?</summary>
+      <p>
+        No. Typical wattage is a planning estimate. Actual wattage can change by model, setting, workload,
+        temperature, age, and whether the appliance cycles on and off.
+      </p>
+    </details>
+    <details>
+      <summary>Why does a power adapter show more watts than the device uses?</summary>
+      <p>
+        Adapter ratings often show the maximum output the adapter can provide. A laptop or small device may
+        draw less during light use and more while charging or doing demanding work.
+      </p>
+    </details>
   </section>
 
   <RelatedLinks

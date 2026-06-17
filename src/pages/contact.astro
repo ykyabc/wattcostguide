@@ -2,7 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Contact WattCostGuide" description="Contact WattCostGuide.">
+<BaseLayout
+  title="Contact WattCostGuide"
+  description="Contact WattCostGuide for appliance wattage corrections, calculator feedback, methodology questions, and site suggestions."
+>
   <section class="page-header">
     <h1>Contact</h1>
     <p>Send calculator corrections, wattage suggestions, article ideas, or general questions.</p>
@@ -15,11 +18,29 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         If you are suggesting a correction, include the appliance name, model if available, wattage source,
         and the page URL. Clear source details make updates much easier to verify.
       </p>
+      <p>
+        For calculator feedback, include the values you entered for watts, hours, and electricity rate, along
+        with what result you expected. This helps us reproduce the estimate and check whether the page copy
+        needs clarification.
+      </p>
     </div>
     <div class="note-panel">
       <h2>Email</h2>
       <p><a href="mailto:hello@wattcostguide.com">hello@wattcostguide.com</a></p>
       <p>We review practical corrections and appliance suggestions for future site updates.</p>
     </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Editorial corrections</h2>
+    <p>
+      WattCostGuide is built around transparent formulas and practical wattage ranges. If a page lists a
+      wattage range that seems too high, too low, or unclear for a common appliance type, send the source and
+      we will review it for a future update.
+    </p>
+    <p>
+      We cannot provide utility billing advice for a specific account, but we can improve calculator examples,
+      clarify formulas, and update educational explanations when better information is available.
+    </p>
   </section>
 </BaseLayout>

@@ -10,7 +10,6 @@ const staticPages = [
   "/guides/",
   "/about/",
   "/references/",
-  "/launch-checklist/",
   "/contact/",
   "/privacy-policy/",
   "/terms/",
