@@ -16,9 +16,18 @@ const pageTitle = `${appliance.name} Electricity Cost Calculator - WattCostGuide
 const description = `Estimate how much it costs to run a ${appliance.name.toLowerCase()} using watts, hours per day, and electricity rate.`;
 const categoryUrl = `/calculators/category/${categorySlug(appliance.category)}/`;
 const exampleDailyCost = (appliance.wattsTypical / 1000) * appliance.defaultHoursPerDay * appliance.defaultRate;
+const categoryAppliances = appliances.filter((item) => item.category === appliance.category);
+const currentCategoryIndex = categoryAppliances.findIndex((item) => item.slug === appliance.slug);
+const previousInCategory =
+  currentCategoryIndex > 0 ? categoryAppliances[currentCategoryIndex - 1] : categoryAppliances.at(-1);
+const nextInCategory =
+  currentCategoryIndex < categoryAppliances.length - 1 ? categoryAppliances[currentCategoryIndex + 1] : categoryAppliances[0];
 const relatedAppliances = appliances
   .filter((item) => item.category === appliance.category && item.slug !== appliance.slug)
   .slice(0, 4);
+const popularAppliances = appliances
+  .filter((item) => item.slug !== appliance.slug && item.category !== appliance.category)
+  .slice(0, 6);
 const usageScenarios = [
   { label: "Low estimate", watts: appliance.wattsMin, hours: Math.max(appliance.defaultHoursPerDay / 2, 0.25) },
   { label: "Typical use", watts: appliance.wattsTypical, hours: appliance.defaultHoursPerDay },
@@ -26,6 +35,7 @@ const usageScenarios = [
 ];
 const formatMoney = (value: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+const calculatorCountLabel = (count: number) => `${count} calculator${count === 1 ? "" : "s"}`;
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -245,6 +255,55 @@ const breadcrumbSchema = {
       </div>
     </section>
   )}
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>More appliance cost calculators</h2>
+      <p>Keep comparing by category or jump to another common household appliance.</p>
+    </div>
+    <div class="link-panel-grid">
+      <a class="link-panel" href={categoryUrl}>
+        <span>Category</span>
+        <strong>All {appliance.category.toLowerCase()} calculators</strong>
+        <small>{calculatorCountLabel(categoryAppliances.length)} in this category</small>
+      </a>
+      <a class="link-panel" href="/calculators/">
+        <span>Calculator library</span>
+        <strong>Browse every appliance calculator</strong>
+        <small>Search by appliance name, category, or wattage range</small>
+      </a>
+      {categoryAppliances.length > 1 && previousInCategory && (
+        <a class="link-panel" href={`/calculators/${previousInCategory.slug}/`}>
+          <span>Previous in category</span>
+          <strong>{previousInCategory.name} Cost Calculator</strong>
+          <small>{previousInCategory.wattsTypical}W typical estimate</small>
+        </a>
+      )}
+      {categoryAppliances.length > 1 && nextInCategory && (
+        <a class="link-panel" href={`/calculators/${nextInCategory.slug}/`}>
+          <span>Next in category</span>
+          <strong>{nextInCategory.name} Cost Calculator</strong>
+          <small>{nextInCategory.wattsTypical}W typical estimate</small>
+        </a>
+      )}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Popular comparisons</h2>
+      <p>These calculators help compare other appliances that often show up on home electricity bills.</p>
+    </div>
+    <div class="card-grid">
+      {popularAppliances.map((popular) => (
+        <a class="card" href={`/calculators/${popular.slug}/`}>
+          <span>{popular.category}</span>
+          <strong>{popular.name} Cost Calculator</strong>
+          <small>{popular.wattsTypical}W typical estimate</small>
+        </a>
+      ))}
+    </div>
+  </section>
 
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />

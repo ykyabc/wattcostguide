@@ -3,6 +3,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { calculatorCategories } from "../../../data/categories";
 
 const totalCalculators = calculatorCategories.reduce((count, category) => count + category.appliances.length, 0);
+const popularCalculators = calculatorCategories.flatMap((category) => category.appliances.slice(0, 2)).slice(0, 8);
+const calculatorCountLabel = (count: number) => `${count} calculator${count === 1 ? "" : "s"}`;
 ---
 
 <BaseLayout
@@ -22,7 +24,7 @@ const totalCalculators = calculatorCategories.reduce((count, category) => count 
     <div class="card-grid">
       {calculatorCategories.map((category) => (
         <a class="card category-card" href={`/calculators/category/${category.slug}/`}>
-          <span>{category.appliances.length} calculators</span>
+          <span>{calculatorCountLabel(category.appliances.length)}</span>
           <strong>{category.name}</strong>
           <small>
             {category.appliances
@@ -41,5 +43,22 @@ const totalCalculators = calculatorCategories.reduce((count, category) => count 
       Category pages make it easier to compare similar appliances. For example, heating and cooling devices
       often run for long periods, while kitchen appliances may use higher wattage for shorter sessions.
     </p>
+    <p><a class="text-link" href="/calculators/">Search the full calculator library</a></p>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Popular calculators by category</h2>
+      <p>Start with common appliances, then follow each calculator page to related estimates.</p>
+    </div>
+    <div class="card-grid">
+      {popularCalculators.map((appliance) => (
+        <a class="card" href={`/calculators/${appliance.slug}/`}>
+          <span>{appliance.category}</span>
+          <strong>{appliance.name} Cost Calculator</strong>
+          <small>{appliance.wattsTypical}W typical estimate</small>
+        </a>
+      ))}
+    </div>
   </section>
 </BaseLayout>

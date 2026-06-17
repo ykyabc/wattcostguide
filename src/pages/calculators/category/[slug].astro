@@ -13,13 +13,22 @@ const { category } = Astro.props;
 const pageTitle = `${category.name} Electricity Cost Calculators - WattCostGuide`;
 const description = `Browse ${category.name.toLowerCase()} electricity cost calculators and compare typical appliance wattage ranges.`;
 const categoryUrl = `https://wattcostguide.com/calculators/category/${category.slug}/`;
+const categoryIndex = calculatorCategories.findIndex((item) => item.slug === category.slug);
+const previousCategory = categoryIndex > 0 ? calculatorCategories[categoryIndex - 1] : calculatorCategories.at(-1);
+const nextCategory =
+  categoryIndex < calculatorCategories.length - 1 ? calculatorCategories[categoryIndex + 1] : calculatorCategories[0];
+const otherCategories = calculatorCategories
+  .filter((item) => item.slug !== category.slug)
+  .slice(0, 4);
+const calculatorCountLabel = (count: number) => `${count} calculator${count === 1 ? "" : "s"}`;
+const categoryCountLabel = (count: number) => `${count} categor${count === 1 ? "y" : "ies"}`;
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
     {
       "@type": "Question",
-      name: `Which ${category.name.toLowerCase()} appliance costs the most to run?`,
+      name: `Which appliance in ${category.name.toLowerCase()} costs the most to run?`,
       acceptedAnswer: {
         "@type": "Answer",
         text: `The highest-cost ${category.name.toLowerCase()} appliance is usually the one with both high wattage and long runtime. Open each calculator and adjust wattage, hours, and electricity rate for a better estimate.`,
@@ -82,10 +91,64 @@ const breadcrumbSchema = {
     </p>
   </section>
 
+  <section class="section">
+    <div class="section-heading">
+      <h2>Explore nearby categories</h2>
+      <p>Use category pages to compare similar appliance groups before opening a specific calculator.</p>
+    </div>
+    <div class="link-panel-grid">
+      <a class="link-panel" href="/calculators/">
+        <span>All calculators</span>
+        <strong>Browse the full calculator library</strong>
+        <small>Search every appliance cost calculator</small>
+      </a>
+      <a class="link-panel" href="/calculators/categories/">
+        <span>All categories</span>
+        <strong>View every appliance category</strong>
+        <small>{categoryCountLabel(calculatorCategories.length)}</small>
+      </a>
+      {previousCategory && previousCategory.slug !== category.slug && (
+        <a class="link-panel" href={`/calculators/category/${previousCategory.slug}/`}>
+          <span>Previous category</span>
+          <strong>{previousCategory.name}</strong>
+          <small>{calculatorCountLabel(previousCategory.appliances.length)}</small>
+        </a>
+      )}
+      {nextCategory && nextCategory.slug !== category.slug && (
+        <a class="link-panel" href={`/calculators/category/${nextCategory.slug}/`}>
+          <span>Next category</span>
+          <strong>{nextCategory.name}</strong>
+          <small>{calculatorCountLabel(nextCategory.appliances.length)}</small>
+        </a>
+      )}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Other appliance categories</h2>
+      <p>Jump to another part of the home energy cost library.</p>
+    </div>
+    <div class="card-grid">
+      {otherCategories.map((otherCategory) => (
+        <a class="card category-card" href={`/calculators/category/${otherCategory.slug}/`}>
+          <span>{calculatorCountLabel(otherCategory.appliances.length)}</span>
+          <strong>{otherCategory.name}</strong>
+          <small>
+            {otherCategory.appliances
+              .slice(0, 3)
+              .map((appliance) => appliance.name)
+              .join(", ")}
+          </small>
+        </a>
+      ))}
+    </div>
+  </section>
+
   <section class="section faq-list">
     <h2>{category.name} calculator FAQ</h2>
     <details open>
-      <summary>Which {category.name.toLowerCase()} appliance costs the most to run?</summary>
+      <summary>Which appliance in this category costs the most to run?</summary>
       <p>
         The highest-cost appliance is usually the one with both high wattage and long runtime.
         Use each calculator with your own rate and hours to compare accurately.
