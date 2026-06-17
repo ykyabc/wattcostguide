@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { appliances } from "../../data/appliances";
+
+const title = "Average Appliance Wattage Guide - WattCostGuide";
+const description = "Compare typical wattage ranges for common household appliances and learn how wattage affects electricity cost.";
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Average Appliance Wattage",
+  description,
+  author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/guides/average-appliance-wattage/",
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/guides/">Guides</a>
+  </nav>
+
+  <section class="page-header">
+    <p class="eyebrow">Appliance Planning</p>
+    <h1>Average Appliance Wattage</h1>
+    <p>Appliance wattage is the starting point for estimating electricity cost, but the best number is always the one printed on your own device.</p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Common wattage ranges</h2>
+    <p>
+      The table below uses practical planning ranges from the WattCostGuide calculators. Use it to compare
+      appliances, then open a calculator for a more specific estimate.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Appliance</th>
+            <th>Typical watts</th>
+            <th>Common range</th>
+            <th>Calculator</th>
+          </tr>
+        </thead>
+        <tbody>
+          {appliances.slice(0, 16).map((appliance) => (
+            <tr>
+              <td>{appliance.name}</td>
+              <td>{appliance.wattsTypical}W</td>
+              <td>{appliance.wattsMin}W-{appliance.wattsMax}W</td>
+              <td><a href={`/calculators/${appliance.slug}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Why wattage is only part of the story</h2>
+    <p>
+      A high-wattage appliance used for a few minutes can cost less than a low-wattage appliance running all day.
+      For cost, combine watts with hours used and your electricity rate.
+    </p>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

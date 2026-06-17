@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const title = "Electricity Rate Cost per kWh - WattCostGuide";
+const description = "Learn what cost per kWh means, where to find your electricity rate, and how it changes appliance running cost estimates.";
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Electricity Rate Cost per kWh",
+  description,
+  author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/guides/electricity-rate-cost-per-kwh/",
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/guides/">Guides</a>
+  </nav>
+
+  <section class="page-header">
+    <p class="eyebrow">Utility Bills</p>
+    <h1>Electricity Rate Cost per kWh</h1>
+    <p>Your electricity rate is the price you pay for each kilowatt-hour of energy. It is the number that turns energy use into cost.</p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Where to find your rate</h2>
+    <p>
+      Look on your electric bill for a line such as energy charge, supply charge, delivery charge, or total
+      cost per kWh. Some bills make this easy, while others split the cost across several line items.
+    </p>
+    <p>
+      For a practical household estimate, divide the bill's electricity-related charges by total kWh used.
+      This gives an effective average rate.
+    </p>
+    <pre><code>Average Rate = Total Electricity Charges / Total kWh Used</code></pre>
+  </section>
+
+  <section class="section">
+    <h2>How rate changes cost</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Rate</th>
+            <th>Cost for 10 kWh</th>
+            <th>Cost for 100 kWh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>$0.12/kWh</td>
+            <td>$1.20</td>
+            <td>$12.00</td>
+          </tr>
+          <tr>
+            <td>$0.17/kWh</td>
+            <td>$1.70</td>
+            <td>$17.00</td>
+          </tr>
+          <tr>
+            <td>$0.25/kWh</td>
+            <td>$2.50</td>
+            <td>$25.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Time-of-use rates</h2>
+    <p>
+      Some utilities charge different rates by time of day. If your plan has peak and off-peak rates,
+      use the rate that matches when the appliance runs.
+    </p>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

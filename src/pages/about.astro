@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="About WattCostGuide"
+  description="Learn about WattCostGuide and how its appliance electricity cost estimates are calculated."
+>
+  <section class="page-header">
+    <p class="eyebrow">About</p>
+    <h1>About WattCostGuide</h1>
+    <p>WattCostGuide helps readers estimate home appliance running costs with transparent formulas and assumptions.</p>
+  </section>
+
+  <section class="section article-block">
+    <h2>What this site does</h2>
+    <p>
+      WattCostGuide is a practical electricity cost calculator site for common household appliances. The goal is
+      to make appliance running costs easier to estimate using three numbers: watts, hours used, and electricity
+      rate.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>How estimates are calculated</h2>
+    <p>
+      The site uses the standard kilowatt-hour cost formula. Each calculator lets you change the wattage,
+      daily runtime, and price per kWh so the result can better match your own appliance and utility bill.
+    </p>
+    <pre><code>Cost = Watts / 1000 x Hours Used x Electricity Rate</code></pre>
+    <p><a class="text-link" href="/references/">Read the full methodology and references</a></p>
+  </section>
+
+  <section class="section">
+    <div class="card-grid">
+      <article class="card">
+        <span>Transparent</span>
+        <strong>Every formula is shown</strong>
+        <small>Calculators use visible inputs so readers can adjust assumptions instead of relying on a hidden estimate.</small>
+      </article>
+      <article class="card">
+        <span>Practical</span>
+        <strong>Built for quick comparisons</strong>
+        <small>Daily, monthly, yearly, and kWh estimates help compare appliances with different wattages and runtimes.</small>
+      </article>
+      <article class="card">
+        <span>Editable</span>
+        <strong>Your numbers matter most</strong>
+        <small>Default wattage and rate values are starting points, not replacements for a product label or utility bill.</small>
+      </article>
+      <article class="card">
+        <span>Maintained</span>
+        <strong>Corrections are welcome</strong>
+        <small>Readers can send appliance wattage suggestions or corrections through the contact page.</small>
+      </article>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Important limitations</h2>
+    <p>
+      Estimates may differ from actual bills because appliances cycle on and off, utility rates vary, and bills
+      can include taxes, fees, demand charges, delivery charges, or time-of-use pricing.
+    </p>
+  </section>
+</BaseLayout>

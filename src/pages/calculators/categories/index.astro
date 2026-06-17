@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { calculatorCategories } from "../../../data/categories";
+
+const totalCalculators = calculatorCategories.reduce((count, category) => count + category.appliances.length, 0);
+---
+
+<BaseLayout
+  title="Appliance Calculator Categories - WattCostGuide"
+  description="Browse WattCostGuide appliance electricity cost calculators by category, including heating and cooling, kitchen appliances, electronics, laundry, and more."
+>
+  <section class="page-header">
+    <p class="eyebrow">Calculator Categories</p>
+    <h1>Browse Appliance Calculators by Category</h1>
+    <p>
+      Explore {totalCalculators} electricity cost calculators grouped by appliance type, then open the category
+      that best matches what you want to estimate.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="card-grid">
+      {calculatorCategories.map((category) => (
+        <a class="card category-card" href={`/calculators/category/${category.slug}/`}>
+          <span>{category.appliances.length} calculators</span>
+          <strong>{category.name}</strong>
+          <small>
+            {category.appliances
+              .slice(0, 3)
+              .map((appliance) => appliance.name)
+              .join(", ")}
+          </small>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>How categories help</h2>
+    <p>
+      Category pages make it easier to compare similar appliances. For example, heating and cooling devices
+      often run for long periods, while kitchen appliances may use higher wattage for shorter sessions.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,131 @@
+---
+type Props = {
+  defaultWatts?: number;
+  defaultHours?: number;
+  defaultRate?: number;
+};
+
+const {
+  defaultWatts = 1500,
+  defaultHours = 4,
+  defaultRate = 0.17,
+} = Astro.props;
+
+const ratePresets = [0.12, 0.17, 0.25, 0.35];
+---
+
+<section
+  class="calculator"
+  data-calculator
+  data-default-watts={defaultWatts}
+  data-default-hours={defaultHours}
+  data-default-rate={defaultRate}
+>
+  <div class="field-grid">
+    <label>
+      <span>Watts</span>
+      <input data-watts type="number" min="0" step="1" value={defaultWatts} />
+    </label>
+    <label>
+      <span>Hours per day</span>
+      <input data-hours type="number" min="0" step="0.25" value={defaultHours} />
+    </label>
+    <label>
+      <span>Electricity rate ($/kWh)</span>
+      <input data-rate type="number" min="0" step="0.01" value={defaultRate} />
+    </label>
+  </div>
+
+  <div class="preset-row" aria-label="Common electricity rate presets">
+    {ratePresets.map((rate) => (
+      <button type="button" data-rate-preset={rate}>${rate.toFixed(2)}</button>
+    ))}
+    <button type="button" data-reset-calculator>Reset</button>
+  </div>
+
+  <div class="usage-summary" aria-live="polite">
+    <span>Estimated energy use</span>
+    <strong data-kwh>0.00 kWh/day</strong>
+  </div>
+
+  <div class="results">
+    <div>
+      <span>Per day</span>
+      <strong data-day>$0.00</strong>
+    </div>
+    <div>
+      <span>Per month</span>
+      <strong data-month>$0.00</strong>
+    </div>
+    <div>
+      <span>Per year</span>
+      <strong data-year>$0.00</strong>
+    </div>
+  </div>
+</section>
+
+<script>
+  const formatMoney = (value: number) =>
+    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+
+  const formatKwh = (value: number) =>
+    `${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 }).format(value)} kWh/day`;
+
+  document.querySelectorAll<HTMLElement>("[data-calculator]").forEach((calculator) => {
+    const watts = calculator.querySelector<HTMLInputElement>("[data-watts]");
+    const hours = calculator.querySelector<HTMLInputElement>("[data-hours]");
+    const rate = calculator.querySelector<HTMLInputElement>("[data-rate]");
+    const kwh = calculator.querySelector<HTMLElement>("[data-kwh]");
+    const day = calculator.querySelector<HTMLElement>("[data-day]");
+    const month = calculator.querySelector<HTMLElement>("[data-month]");
+    const year = calculator.querySelector<HTMLElement>("[data-year]");
+    const presetButtons = calculator.querySelectorAll<HTMLButtonElement>("[data-rate-preset]");
+    const resetButton = calculator.querySelector<HTMLButtonElement>("[data-reset-calculator]");
+
+    const setActivePreset = () => {
+      presetButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.ratePreset === rate?.value));
+      });
+    };
+
+    const update = () => {
+      if (!watts || !hours || !rate || !kwh || !day || !month || !year) return;
+      const dailyKwh = (Number(watts.value) / 1000) * Number(hours.value);
+      const dailyCost = dailyKwh * Number(rate.value);
+      kwh.textContent = formatKwh(dailyKwh);
+      day.textContent = formatMoney(dailyCost);
+      month.textContent = formatMoney(dailyCost * 30);
+      year.textContent = formatMoney(dailyCost * 365);
+      setActivePreset();
+      calculator.dispatchEvent(
+        new CustomEvent("calculator:update", {
+          bubbles: true,
+          detail: {
+            watts: Number(watts.value),
+            hours: Number(hours.value),
+            rate: Number(rate.value),
+            dailyCost,
+            dailyKwh,
+          },
+        }),
+      );
+    };
+
+    [watts, hours, rate].forEach((input) => input?.addEventListener("input", update));
+    presetButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (!rate || !button.dataset.ratePreset) return;
+        rate.value = button.dataset.ratePreset;
+        update();
+      });
+    });
+    resetButton?.addEventListener("click", () => {
+      if (!watts || !hours || !rate) return;
+      watts.value = calculator.dataset.defaultWatts || "1500";
+      hours.value = calculator.dataset.defaultHours || "4";
+      rate.value = calculator.dataset.defaultRate || "0.17";
+      update();
+    });
+    update();
+  });
+</script>

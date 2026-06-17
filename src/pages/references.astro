@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "References and Methodology - WattCostGuide";
+const description = "Learn how WattCostGuide estimates appliance electricity costs, wattage ranges, kWh usage, and electricity rates.";
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "References and Methodology",
+  description,
+  author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/references/",
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="page-header">
+    <p class="eyebrow">Methodology</p>
+    <h1>References and Methodology</h1>
+    <p>
+      WattCostGuide uses a simple, transparent calculation model so readers can understand and adjust every
+      estimate on the site.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Core formula</h2>
+    <p>
+      Every appliance calculator starts with the same electricity cost formula. Watts are converted to kilowatts,
+      then multiplied by runtime and electricity rate.
+    </p>
+    <pre><code>Cost = Watts / 1000 x Hours Used x Electricity Rate</code></pre>
+    <p>
+      The same conversion is used for energy consumption:
+    </p>
+    <pre><code>kWh = Watts / 1000 x Hours Used</code></pre>
+  </section>
+
+  <section class="section article-block">
+    <h2>Wattage ranges</h2>
+    <p>
+      Wattage ranges on WattCostGuide are planning estimates for common household appliances. They are intended
+      to help readers start with a reasonable number when the exact label wattage is not available.
+    </p>
+    <p>
+      Actual wattage can vary by model, size, age, efficiency rating, operating mode, thermostat setting,
+      and whether the appliance cycles on and off.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Electricity rates</h2>
+    <p>
+      Many calculators use $0.17 per kWh as a default example rate. This is not a fixed national rate or a
+      promise about any utility bill. Readers should replace it with the electricity rate from their own bill
+      whenever possible.
+    </p>
+    <p>
+      For bills with multiple line items, an effective average rate can be estimated by dividing electricity-related
+      charges by total kWh used.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Recommended sources to verify your own numbers</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>What to verify</th>
+            <th>Best source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Appliance wattage</td>
+            <td>Product label, nameplate, owner manual, or manufacturer specifications</td>
+          </tr>
+          <tr>
+            <td>Runtime</td>
+            <td>Your actual daily use pattern or smart plug energy monitor</td>
+          </tr>
+          <tr>
+            <td>Electricity rate</td>
+            <td>Your utility bill, utility website, or time-of-use rate schedule</td>
+          </tr>
+          <tr>
+            <td>Whole-home usage</td>
+            <td>Monthly utility bill or utility account dashboard</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Limitations</h2>
+    <p>
+      WattCostGuide estimates appliance energy cost only. Actual bills can include taxes, fixed fees, tiered
+      pricing, demand charges, seasonal rates, delivery charges, and other appliances running at the same time.
+    </p>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

@@ -1,0 +1,64 @@
+---
+import ApplianceCostCalculator from "../components/ApplianceCostCalculator.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { appliances } from "../data/appliances";
+import { guides } from "../data/guides";
+
+const featuredAppliances = appliances.slice(0, 8);
+const featuredGuides = guides.slice(0, 4);
+---
+
+<BaseLayout
+  title="WattCostGuide - Appliance Electricity Cost Calculators"
+  description="Estimate how much your home appliances cost to run with simple electricity cost calculators."
+>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Appliance electricity cost calculators</p>
+      <h1>Find out how much your appliances cost to run.</h1>
+      <p class="lede">
+        Use watts, hours, and your electricity rate to estimate daily, monthly, and yearly running costs.
+      </p>
+    </div>
+    <ApplianceCostCalculator />
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Start with a popular appliance</h2>
+      <p>These first calculators cover the pages planned for the initial WattCostGuide launch.</p>
+    </div>
+    <div class="card-grid">
+      {featuredAppliances.map((appliance) => (
+        <a class="card" href={`/calculators/${appliance.slug}/`}>
+          <span>{appliance.category}</span>
+          <strong>{appliance.name} Cost Calculator</strong>
+          <small>{appliance.wattsTypical}W typical estimate</small>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section formula-band">
+    <div>
+      <h2>The basic formula</h2>
+      <p>Cost = Watts / 1000 x Hours Used x Electricity Rate</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Learn the basics</h2>
+      <p>Use these guides to understand watts, kWh, electricity rates, and common appliance estimates.</p>
+    </div>
+    <div class="card-grid">
+      {featuredGuides.map((guide) => (
+        <a class="card" href={`/guides/${guide.slug}/`}>
+          <span>{guide.category}</span>
+          <strong>{guide.title}</strong>
+          <small>{guide.description}</small>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

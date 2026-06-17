@@ -1,0 +1,90 @@
+---
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://wattcostguide.com");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1f7a5b" />
+    <meta property="og:site_name" content="WattCostGuide" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      let savedTheme;
+      try {
+        savedTheme = localStorage.getItem("theme");
+      } catch {
+        savedTheme = null;
+      }
+      const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+    </script>
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/">WattCostGuide</a>
+      <div class="header-actions">
+        <nav aria-label="Main navigation">
+          <a href="/calculators/">Calculators</a>
+          <a href="/guides/">Guides</a>
+          <a href="/about/">About</a>
+        </nav>
+        <div class="theme-switcher" aria-label="Theme selection">
+          <button type="button" data-theme-option="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+        </div>
+      </div>
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>WattCostGuide helps estimate appliance running costs using watts, hours, and electricity rates.</p>
+      <nav aria-label="Footer navigation">
+        <a href="/references/">References</a>
+        <a href="/privacy-policy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </footer>
+    <script>
+      const themeButtons = document.querySelectorAll<HTMLButtonElement>("[data-theme-option]");
+      const applyTheme = (theme: string) => {
+        document.documentElement.dataset.theme = theme;
+        try {
+          localStorage.setItem("theme", theme);
+        } catch {
+          // Theme still applies for the current page when storage is unavailable.
+        }
+        themeButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeOption === theme));
+        });
+      };
+
+      applyTheme(document.documentElement.dataset.theme || "light");
+      themeButtons.forEach((button) => {
+        button.addEventListener("click", () => applyTheme(button.dataset.themeOption || "light"));
+      });
+    </script>
+  </body>
+</html>

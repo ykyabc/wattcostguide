@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const title = "Appliance Energy Saving Tips - WattCostGuide";
+const description = "Practical appliance energy saving tips for lowering household electricity costs without complicated equipment.";
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Appliance Energy Saving Tips",
+  description,
+  author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/guides/appliance-energy-saving-tips/",
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/guides/">Guides</a>
+  </nav>
+
+  <section class="page-header">
+    <p class="eyebrow">Saving Energy</p>
+    <h1>Appliance Energy Saving Tips</h1>
+    <p>Most appliance savings come from reducing runtime, choosing efficient settings, and maintaining equipment so it does not work harder than necessary.</p>
+  </section>
+
+  <section class="section">
+    <div class="card-grid">
+      <article class="card">
+        <span>Heating and cooling</span>
+        <strong>Reduce runtime first</strong>
+        <small>Seal gaps, clean filters, use reasonable thermostat settings, and heat or cool only the spaces you use.</small>
+      </article>
+      <article class="card">
+        <span>Kitchen</span>
+        <strong>Use the right-sized appliance</strong>
+        <small>Microwaves, air fryers, kettles, and toaster ovens can use less total energy for small jobs.</small>
+      </article>
+      <article class="card">
+        <span>Laundry</span>
+        <strong>Watch the dryer</strong>
+        <small>Electric dryers use a lot of power. Clean the lint filter, use sensor dry, and avoid overloading.</small>
+      </article>
+      <article class="card">
+        <span>Electronics</span>
+        <strong>Use sleep settings</strong>
+        <small>Computers, TVs, and consoles are cheaper when they stop running during idle hours.</small>
+      </article>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Use calculators to prioritize</h2>
+    <p>
+      Start with appliances that combine high wattage with long runtime. A small change to a pool pump,
+      space heater, air conditioner, dryer, or water heater can matter more than unplugging a low-wattage device.
+    </p>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

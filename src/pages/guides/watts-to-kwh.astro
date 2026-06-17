@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const title = "Watts to kWh Calculator and Formula - WattCostGuide";
+const description = "Learn how to convert watts and hours into kilowatt-hours for appliance electricity cost estimates.";
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Watts to kWh Calculator and Formula",
+  description,
+  author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/guides/watts-to-kwh/",
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/guides/">Guides</a>
+  </nav>
+
+  <section class="page-header">
+    <p class="eyebrow">Basics</p>
+    <h1>Watts to kWh Calculator and Formula</h1>
+    <p>kWh is the unit most electricity bills use to measure energy consumption.</p>
+  </section>
+  <section class="section">
+    <h2>Formula</h2>
+    <pre><code>kWh = Watts / 1000 x Hours Used</code></pre>
+    <p>A 1,500 watt appliance running for 4 hours uses 6 kWh.</p>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

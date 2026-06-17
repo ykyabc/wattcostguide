@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { guides } from "../../data/guides";
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Electricity Cost Guides",
+  itemListElement: guides.map((guide, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: guide.title,
+    url: `https://wattcostguide.com/guides/${guide.slug}/`,
+  })),
+};
+---
+
+<BaseLayout
+  title="Electricity Cost Guides - WattCostGuide"
+  description="Plain-English guides for watts, kWh, appliance running costs, and home electricity estimates."
+>
+  <section class="page-header">
+    <p class="eyebrow">Guides</p>
+    <h1>Electricity Cost Guides</h1>
+    <p>Simple explanations for the numbers behind appliance running costs.</p>
+  </section>
+  <section class="section">
+    <div class="card-grid">
+      {guides.map((guide) => (
+        <a class="card" href={`/guides/${guide.slug}/`}>
+          <span>{guide.category}</span>
+          <strong>{guide.title}</strong>
+          <small>{guide.description}</small>
+        </a>
+      ))}
+      <a class="card" href="/references/">
+        <span>Methodology</span>
+        <strong>References and Methodology</strong>
+        <small>See how WattCostGuide handles formulas, wattage ranges, electricity rates, and limitations.</small>
+      </a>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+</BaseLayout>

@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { calculatorCategories } from "../../data/categories";
+---
+
+<BaseLayout
+  title="Appliance Electricity Cost Calculators - WattCostGuide"
+  description="Browse appliance electricity cost calculators for heaters, air conditioners, refrigerators, dryers, and more."
+>
+  <section class="page-header">
+    <p class="eyebrow">Calculators</p>
+    <h1>Appliance Electricity Cost Calculators</h1>
+    <p>Choose an appliance and estimate running costs from wattage, usage time, and electricity rate.</p>
+    <p><a class="text-link" href="/calculators/categories/">Browse all calculator categories</a></p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="filter-panel">
+      <label>
+        <span>Search calculators</span>
+        <input
+          data-calculator-search
+          type="search"
+          placeholder="Try refrigerator, heating, 1500W..."
+          autocomplete="off"
+        />
+      </label>
+      <p data-filter-summary>{calculatorCategories.reduce((count, category) => count + category.appliances.length, 0)} calculators available</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="category-list" data-calculator-list>
+      {calculatorCategories.map((category) => (
+        <section class="category-section" data-category-section>
+          <div class="section-heading">
+            <h2><a href={`/calculators/category/${category.slug}/`}>{category.name}</a></h2>
+            <p>Compare typical wattage and open a calculator for a more specific running cost estimate.</p>
+          </div>
+          <div class="card-grid">
+            {category.appliances.map((appliance) => (
+              <a
+                class="card"
+                href={`/calculators/${appliance.slug}/`}
+                data-calculator-card
+                data-search={`${appliance.name} ${appliance.category} ${appliance.wattsMin}W ${appliance.wattsTypical}W ${appliance.wattsMax}W`}
+              >
+                <span>{appliance.category}</span>
+                <strong>{appliance.name}</strong>
+                <small>{appliance.wattsMin}W-{appliance.wattsMax}W common range</small>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+    <p class="empty-state" data-empty-state hidden>No matching calculators found.</p>
+  </section>
+
+  <script>
+    const searchInput = document.querySelector<HTMLInputElement>("[data-calculator-search]");
+    const cards = [...document.querySelectorAll<HTMLElement>("[data-calculator-card]")];
+    const sections = [...document.querySelectorAll<HTMLElement>("[data-category-section]")];
+    const summary = document.querySelector<HTMLElement>("[data-filter-summary]");
+    const emptyState = document.querySelector<HTMLElement>("[data-empty-state]");
+
+    const updateFilter = () => {
+      const query = searchInput?.value.trim().toLowerCase() || "";
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const matches = !query || (card.dataset.search || "").toLowerCase().includes(query);
+        card.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+
+      sections.forEach((section) => {
+        const hasVisibleCard = Boolean(section.querySelector("[data-calculator-card]:not([hidden])"));
+        section.hidden = !hasVisibleCard;
+      });
+
+      if (summary) {
+        summary.textContent = query
+          ? `${visibleCount} calculator${visibleCount === 1 ? "" : "s"} match your search`
+          : `${cards.length} calculators available`;
+      }
+
+      if (emptyState) emptyState.hidden = visibleCount > 0;
+    };
+
+    searchInput?.addEventListener("input", updateFilter);
+  </script>
+</BaseLayout>

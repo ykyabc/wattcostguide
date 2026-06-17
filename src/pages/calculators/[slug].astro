@@ -1,0 +1,273 @@
+---
+import ApplianceCostCalculator from "../../components/ApplianceCostCalculator.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { appliances } from "../../data/appliances";
+import { categorySlug } from "../../data/categories";
+
+export function getStaticPaths() {
+  return appliances.map((appliance) => ({
+    params: { slug: appliance.slug },
+    props: { appliance },
+  }));
+}
+
+const { appliance } = Astro.props;
+const pageTitle = `${appliance.name} Electricity Cost Calculator - WattCostGuide`;
+const description = `Estimate how much it costs to run a ${appliance.name.toLowerCase()} using watts, hours per day, and electricity rate.`;
+const categoryUrl = `/calculators/category/${categorySlug(appliance.category)}/`;
+const exampleDailyCost = (appliance.wattsTypical / 1000) * appliance.defaultHoursPerDay * appliance.defaultRate;
+const relatedAppliances = appliances
+  .filter((item) => item.category === appliance.category && item.slug !== appliance.slug)
+  .slice(0, 4);
+const usageScenarios = [
+  { label: "Low estimate", watts: appliance.wattsMin, hours: Math.max(appliance.defaultHoursPerDay / 2, 0.25) },
+  { label: "Typical use", watts: appliance.wattsTypical, hours: appliance.defaultHoursPerDay },
+  { label: "High estimate", watts: appliance.wattsMax, hours: appliance.defaultHoursPerDay * 1.5 },
+];
+const formatMoney = (value: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: `How much does it cost to run a ${appliance.name.toLowerCase()}?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: appliance.shortAnswer,
+      },
+    },
+    {
+      "@type": "Question",
+      name: `What wattage should I use for a ${appliance.name.toLowerCase()}?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `Use the wattage printed on your appliance label when possible. If you do not have it, ${appliance.name.toLowerCase()} units commonly fall between ${appliance.wattsMin} and ${appliance.wattsMax} watts, with ${appliance.wattsTypical} watts as a practical starting estimate.`,
+      },
+    },
+  ],
+};
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: `${appliance.name} Electricity Cost Calculator`,
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  url: `https://wattcostguide.com/calculators/${appliance.slug}/`,
+  description,
+};
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://wattcostguide.com/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Calculators",
+      item: "https://wattcostguide.com/calculators/",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: appliance.category,
+      item: `https://wattcostguide.com${categoryUrl}`,
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
+      name: appliance.name,
+      item: `https://wattcostguide.com/calculators/${appliance.slug}/`,
+    },
+  ],
+};
+---
+
+<BaseLayout title={pageTitle} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/calculators/">Calculators</a>
+    <span>/</span>
+    <a href={categoryUrl}>{appliance.category}</a>
+  </nav>
+
+  <section class="page-header">
+    <p class="eyebrow">{appliance.category}</p>
+    <h1>{appliance.name} Electricity Cost Calculator</h1>
+    <p>{appliance.shortAnswer}</p>
+  </section>
+
+  <section class="section two-column" data-live-estimate>
+    <ApplianceCostCalculator
+      defaultWatts={appliance.wattsTypical}
+      defaultHours={appliance.defaultHoursPerDay}
+      defaultRate={appliance.defaultRate}
+    />
+    <div class="note-panel">
+      <p class="eyebrow">Quick estimate</p>
+      <h2><span data-live-daily-cost>{formatMoney(exampleDailyCost)}</span> per day</h2>
+      <p>
+        This uses <strong data-live-watts>{appliance.wattsTypical}</strong> watts,
+        <strong data-live-hours>{appliance.defaultHoursPerDay}</strong> hours per day,
+        and an electricity rate of $<strong data-live-rate>{appliance.defaultRate.toFixed(2)}</strong> per kWh.
+      </p>
+      <p>{appliance.usageNote}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Typical {appliance.name.toLowerCase()} wattage</h2>
+    <p>
+      Many {appliance.name.toLowerCase()} units fall around {appliance.wattsTypical} watts,
+      with a rough range of {appliance.wattsMin} to {appliance.wattsMax} watts. Check the product label,
+      user manual, or manufacturer specifications for the most accurate number.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Estimate</th>
+            <th>Watts</th>
+            <th>Hours per day</th>
+            <th>Daily cost</th>
+            <th>Monthly cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          {usageScenarios.map((scenario) => {
+            const dailyCost = (scenario.watts / 1000) * scenario.hours * appliance.defaultRate;
+            return (
+              <tr>
+                <td>{scenario.label}</td>
+                <td>{scenario.watts}W</td>
+                <td>{scenario.hours.toFixed(scenario.hours % 1 === 0 ? 0 : 2)}</td>
+                <td>{formatMoney(dailyCost)}</td>
+                <td>{formatMoney(dailyCost * 30)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>How the estimate works</h2>
+    <p>
+      Convert watts to kilowatts, multiply by the number of hours used, then multiply by your electricity rate.
+    </p>
+    <pre><code>Cost = Watts / 1000 x Hours Used x Electricity Rate</code></pre>
+    <p>
+      For this {appliance.name.toLowerCase()} example: {appliance.wattsTypical} / 1000 x {appliance.defaultHoursPerDay}
+      x {appliance.defaultRate} = {formatMoney(exampleDailyCost)} per day.
+    </p>
+  </section>
+
+  {appliance.detailSections && (
+    <section class="section">
+      <div class="section-heading">
+        <h2>{appliance.name} cost factors</h2>
+        <p>These details make this estimate more useful for real-world use.</p>
+      </div>
+      <div class="insight-grid">
+        {appliance.detailSections.map((section) => (
+          <article class="insight-panel">
+            <h3>{section.heading}</h3>
+            <p>{section.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="section two-column">
+    <div class="article-block">
+      <h2>How to lower the cost</h2>
+      <p>{appliance.savingTip}</p>
+      <p>
+        The easiest way to improve the estimate is to replace the default values with your actual wattage,
+        average runtime, and local electricity rate.
+      </p>
+    </div>
+    <div class="note-panel">
+      <h2>About these numbers</h2>
+      <p>
+        Wattage ranges are practical planning estimates for common household appliances. Actual use can differ
+        by model, age, settings, room conditions, and maintenance.
+      </p>
+    </div>
+  </section>
+
+  <section class="section faq-list">
+    <h2>{appliance.name} electricity cost FAQ</h2>
+    <details open>
+      <summary>How much does it cost to run a {appliance.name.toLowerCase()}?</summary>
+      <p>{appliance.shortAnswer}</p>
+    </details>
+    <details>
+      <summary>What wattage should I use?</summary>
+      <p>
+        Use the wattage printed on the appliance label when possible. As a starting estimate,
+        this page uses {appliance.wattsTypical} watts and shows a common range of {appliance.wattsMin}
+        to {appliance.wattsMax} watts.
+      </p>
+    </details>
+    <details>
+      <summary>Why is my actual bill different?</summary>
+      <p>
+        Electricity bills include many appliances, fees, taxes, seasonal changes, and utility rate structures.
+        This calculator estimates appliance energy cost only.
+      </p>
+    </details>
+  </section>
+
+  {relatedAppliances.length > 0 && (
+    <section class="section">
+      <div class="section-heading">
+        <h2>Related {appliance.category.toLowerCase()} calculators</h2>
+        <p>Compare similar appliances in the same category.</p>
+      </div>
+      <div class="card-grid">
+        {relatedAppliances.map((related) => (
+          <a class="card" href={`/calculators/${related.slug}/`}>
+            <span>{related.category}</span>
+            <strong>{related.name} Cost Calculator</strong>
+            <small>{related.wattsTypical}W typical estimate</small>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script>
+    const liveEstimateSections = document.querySelectorAll<HTMLElement>("[data-live-estimate]");
+    const moneyFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+    const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+
+    liveEstimateSections.forEach((section) => {
+      const dailyCost = section.querySelector<HTMLElement>("[data-live-daily-cost]");
+      const watts = section.querySelector<HTMLElement>("[data-live-watts]");
+      const hours = section.querySelector<HTMLElement>("[data-live-hours]");
+      const rate = section.querySelector<HTMLElement>("[data-live-rate]");
+
+      section.addEventListener("calculator:update", (event) => {
+        const detail = (event as CustomEvent).detail;
+        if (!detail) return;
+        if (dailyCost) dailyCost.textContent = moneyFormatter.format(detail.dailyCost);
+        if (watts) watts.textContent = numberFormatter.format(detail.watts);
+        if (hours) hours.textContent = numberFormatter.format(detail.hours);
+        if (rate) rate.textContent = Number(detail.rate).toFixed(2);
+      });
+    });
+  </script>
+</BaseLayout>
