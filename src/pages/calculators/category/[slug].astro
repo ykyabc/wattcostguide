@@ -10,8 +10,12 @@ export function getStaticPaths() {
 }
 
 const { category } = Astro.props;
-const pageTitle = `${category.name} Electricity Cost Calculators - WattCostGuide`;
-const description = `Browse ${category.name.toLowerCase()} electricity cost calculators and compare typical appliance wattage ranges.`;
+const pageTitle = `${category.name} Electricity Cost Calculators by Wattage`;
+const topApplianceNames = category.appliances
+  .slice(0, 3)
+  .map((appliance) => appliance.name.toLowerCase())
+  .join(", ");
+const description = `Compare ${category.name.toLowerCase()} electricity cost calculators for ${topApplianceNames}, and more. Estimate cost from watts, hours, and cost per kWh.`;
 const categoryUrl = `https://wattcostguide.com/calculators/category/${category.slug}/`;
 const categoryIndex = calculatorCategories.findIndex((item) => item.slug === category.slug);
 const previousCategory = categoryIndex > 0 ? calculatorCategories[categoryIndex - 1] : calculatorCategories.at(-1);

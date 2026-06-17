@@ -14,10 +14,13 @@ export function getStaticPaths() {
 }
 
 const { appliance } = Astro.props;
-const pageTitle = `${appliance.name} Electricity Cost Calculator - WattCostGuide`;
-const description = `Estimate how much it costs to run a ${appliance.name.toLowerCase()} using watts, hours per day, and electricity rate.`;
+const pageTitle = `${appliance.name} Cost Calculator: Watts, kWh & Running Cost`;
 const categoryUrl = `/calculators/category/${categorySlug(appliance.category)}/`;
 const exampleDailyCost = (appliance.wattsTypical / 1000) * appliance.defaultHoursPerDay * appliance.defaultRate;
+const exampleMonthlyCost = exampleDailyCost * 30;
+const formatMoney = (value: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+const description = `Estimate ${appliance.name.toLowerCase()} electricity cost from watts, hours, and rate. A ${appliance.wattsTypical}W estimate costs about ${formatMoney(exampleDailyCost)}/day or ${formatMoney(exampleMonthlyCost)}/month at $${appliance.defaultRate.toFixed(2)}/kWh.`;
 const categoryAppliances = appliances.filter((item) => item.category === appliance.category);
 const currentCategoryIndex = categoryAppliances.findIndex((item) => item.slug === appliance.slug);
 const previousInCategory =
@@ -35,8 +38,6 @@ const usageScenarios = [
   { label: "Typical use", watts: appliance.wattsTypical, hours: appliance.defaultHoursPerDay },
   { label: "High estimate", watts: appliance.wattsMax, hours: appliance.defaultHoursPerDay * 1.5 },
 ];
-const formatMoney = (value: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 const calculatorCountLabel = (count: number) => `${count} calculator${count === 1 ? "" : "s"}`;
 const guideLinks = guides.slice(0, 5).map((guide) => ({
   eyebrow: guide.category,
