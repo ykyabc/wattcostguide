@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# private Search Console exports
+search-console/
+
 # macOS-specific files
 .DS_Store
 

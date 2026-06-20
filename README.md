@@ -1,43 +1,20 @@
-# Astro Starter Kit: Minimal
+# WattCostGuide
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+Static Astro site for appliance electricity cost calculators and practical energy-use guides.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command | Action |
+| --- | --- |
+| `pnpm install` | Install dependencies |
+| `pnpm dev` | Start the local development server |
+| `pnpm build` | Build the production site into `dist/` |
+| `pnpm run audit` | Build and run the complete site audit |
+| `pnpm run audit:dist` | Audit the existing `dist/` output without rebuilding |
+| `pnpm preview` | Preview the production build locally |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Site audit
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The audit checks page metadata, Open Graph tags, title and description duplication, internal links, local images,
+stale rate copy, calculator sources and update dates, robots.txt, and sitemap coverage. Errors return a non-zero exit
+code. GitHub Actions runs the audit automatically for pull requests and pushes to `main`.
