@@ -19,7 +19,10 @@ const defaultLastmod = "2026-06-17";
 
 export function GET() {
   const urls = [
-    ...staticPages.map((path) => ({ path, lastmod: defaultLastmod })),
+    ...staticPages.map((path) => ({
+      path,
+      lastmod: path === "/" ? "2026-06-20" : defaultLastmod,
+    })),
     ...guides.map((guide) => ({ path: `/guides/${guide.slug}/`, lastmod: defaultLastmod })),
     ...calculatorCategories.map((category) => ({
       path: `/calculators/category/${category.slug}/`,
