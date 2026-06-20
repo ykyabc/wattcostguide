@@ -6,6 +6,7 @@ import RelatedLinks from "../../components/RelatedLinks.astro";
 import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
 import { categorySlug } from "../../data/categories";
+import { getApplianceReferences } from "../../data/applianceReferences";
 
 export function getStaticPaths() {
   return appliances.map((appliance) => ({
@@ -15,6 +16,13 @@ export function getStaticPaths() {
 }
 
 const { appliance } = Astro.props;
+const { updated, sources } = getApplianceReferences(appliance.slug);
+const updatedLabel = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${updated}T00:00:00Z`));
 const titleApplianceName = appliance.name === "Electric Vehicle Charger" ? "EV Charger" : appliance.name;
 const pageTitle = `${titleApplianceName} Cost Calculator: Watts, kWh & Running Cost`;
 const categoryUrl = `/calculators/category/${categorySlug(appliance.category)}/`;
@@ -77,6 +85,8 @@ const appSchema = {
   operatingSystem: "Any",
   url: `https://wattcostguide.com/calculators/${appliance.slug}/`,
   description,
+  dateModified: updated,
+  citation: sources.map((source) => source.url),
 };
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -125,7 +135,7 @@ const breadcrumbSchema = {
     <p>{appliance.shortAnswer}</p>
   </section>
 
-  <EditorialNote />
+  <EditorialNote updated={updatedLabel} />
 
   <section class="section two-column" data-live-estimate>
     <ApplianceCostCalculator
@@ -226,6 +236,26 @@ const breadcrumbSchema = {
         by model, age, settings, room conditions, and maintenance.
       </p>
     </div>
+  </section>
+
+  <section class="section article-block" aria-labelledby="sources-heading">
+    <div class="section-heading">
+      <h2 id="sources-heading">Sources and methodology</h2>
+      <p>
+        These authoritative sources support the calculation method, default electricity-rate benchmark, and
+        appliance-specific operating context. The wattage range remains a planning estimate; use the nameplate
+        on your own appliance for the most accurate input.
+      </p>
+    </div>
+    <ul class="source-list">
+      {sources.map((source) => (
+        <li>
+          <a href={source.url}>{source.title}</a>
+          <span>{source.publisher}</span>
+          <p>{source.note}</p>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <section class="section faq-list">
