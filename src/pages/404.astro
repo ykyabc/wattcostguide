@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page Not Found - WattCostGuide"
+  description="The requested WattCostGuide page could not be found. Browse our appliance electricity cost calculators and practical energy guides."
+  robots="noindex, follow"
+>
+  <section class="page-header">
+    <p class="eyebrow">404 error</p>
+    <h1>Page not found</h1>
+    <p>
+      The page may have moved, or the address may be incorrect. You can continue with an appliance
+      calculator or one of our electricity cost guides.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="continue-heading">
+    <div class="section-heading">
+      <h2 id="continue-heading">Keep exploring</h2>
+    </div>
+    <div class="link-panel-grid">
+      <a class="card" href="/">
+        <h3>Home</h3>
+        <p>Start with the electricity cost formula and popular tools.</p>
+      </a>
+      <a class="card" href="/calculators/">
+        <h3>Calculators</h3>
+        <p>Estimate the running cost of common household appliances.</p>
+      </a>
+      <a class="card" href="/guides/">
+        <h3>Guides</h3>
+        <p>Learn how watts, kilowatt-hours, and electricity rates work.</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

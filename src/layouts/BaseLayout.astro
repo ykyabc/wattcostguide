@@ -2,9 +2,10 @@
 type Props = {
   title: string;
   description: string;
+  robots?: string;
 };
 
-const { title, description } = Astro.props;
+const { title, description, robots } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://wattcostguide.com");
 ---
 
@@ -16,6 +17,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://wattcostgui
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <meta name="theme-color" content="#1f7a5b" />
     <meta property="og:site_name" content="WattCostGuide" />
     <meta property="og:type" content="website" />
