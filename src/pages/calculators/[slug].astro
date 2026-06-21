@@ -7,6 +7,7 @@ import { appliances } from "../../data/appliances";
 import { guides } from "../../data/guides";
 import { categorySlug } from "../../data/categories";
 import { getApplianceReferences } from "../../data/applianceReferences";
+import { getAppliancePageContent } from "../../data/appliancePageContent";
 
 export function getStaticPaths() {
   return appliances.map((appliance) => ({
@@ -17,6 +18,7 @@ export function getStaticPaths() {
 
 const { appliance } = Astro.props;
 const { updated, sources } = getApplianceReferences(appliance.slug);
+const pageContent = getAppliancePageContent(appliance.slug);
 const updatedLabel = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
@@ -49,7 +51,20 @@ const usageScenarios = [
   { label: "High estimate", watts: appliance.wattsMax, hours: appliance.defaultHoursPerDay * 1.5 },
 ];
 const calculatorCountLabel = (count: number) => `${count} calculator${count === 1 ? "" : "s"}`;
-const guideLinks = guides.slice(0, 5).map((guide) => ({
+const contextualGuideSlug =
+  appliance.category === "Electronics"
+    ? "standby-power-cost"
+    : ["Heating & Cooling", "Water Heating", "Outdoor & Garage", "Hobby & Specialty"].includes(appliance.category)
+      ? "appliance-duty-cycle-electricity-cost"
+      : "how-to-measure-appliance-electricity-use";
+const guideSlugs = [
+  contextualGuideSlug,
+  "how-to-measure-appliance-electricity-use",
+  "how-to-calculate-electricity-cost",
+  "average-appliance-wattage",
+  "electricity-rate-cost-per-kwh",
+];
+const guideLinks = guides.filter((guide) => guideSlugs.includes(guide.slug)).slice(0, 5).map((guide) => ({
   eyebrow: guide.category,
   title: guide.title,
   description: guide.description,
@@ -59,6 +74,14 @@ const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
+    {
+      "@type": "Question",
+      name: pageContent.faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: pageContent.faq.answer,
+      },
+    },
     {
       "@type": "Question",
       name: `How much does it cost to run a ${appliance.name.toLowerCase()}?`,
@@ -191,6 +214,25 @@ const breadcrumbSchema = {
     </div>
   </section>
 
+  <section class="section" data-appliance-input-guide>
+    <div class="section-heading">
+      <h2>Choose realistic inputs for this {appliance.name.toLowerCase()}</h2>
+      <p>{pageContent.usageProfile}</p>
+    </div>
+    <div class="insight-grid">
+      <article class="insight-panel">
+        <p class="eyebrow">Wattage input</p>
+        <h3>Use the electrical draw, not a look-alike rating</h3>
+        <p>{pageContent.wattageInput}</p>
+      </article>
+      <article class="insight-panel">
+        <p class="eyebrow">Runtime input</p>
+        <h3>Count the part of operation that consumes power</h3>
+        <p>{pageContent.runtimeInput}</p>
+      </article>
+    </div>
+  </section>
+
   <section class="section article-block">
     <h2>How the estimate works</h2>
     <p>
@@ -261,6 +303,10 @@ const breadcrumbSchema = {
   <section class="section faq-list">
     <h2>{appliance.name} electricity cost FAQ</h2>
     <details open>
+      <summary>{pageContent.faq.question}</summary>
+      <p>{pageContent.faq.answer}</p>
+    </details>
+    <details>
       <summary>How much does it cost to run a {appliance.name.toLowerCase()}?</summary>
       <p>{appliance.shortAnswer}</p>
     </details>

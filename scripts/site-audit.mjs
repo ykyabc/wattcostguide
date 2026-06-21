@@ -66,6 +66,34 @@ const seenTitles = new Map();
 const seenDescriptions = new Map();
 let internalLinkCount = 0;
 let externalLinkCount = 0;
+const calculatorPages = [];
+
+function visibleText(html) {
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? html;
+  return main
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&(?:amp|quot|apos|lt|gt|nbsp);/g, " ")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function shingles(text, size = 5) {
+  const words = text.split(/\s+/);
+  const result = new Set();
+  for (let index = 0; index <= words.length - size; index += 1) {
+    result.add(words.slice(index, index + size).join(" "));
+  }
+  return result;
+}
+
+function jaccard(left, right) {
+  let intersection = 0;
+  for (const item of left) if (right.has(item)) intersection += 1;
+  return intersection / (left.size + right.size - intersection);
+}
 
 for (const file of htmlFiles) {
   const label = displayPath(file);
@@ -123,6 +151,8 @@ for (const file of htmlFiles) {
     if (!html.includes('"dateModified":') || !html.includes('"citation":[')) {
       fail(label, "missing dateModified or citation schema data");
     }
+    if (!html.includes("data-appliance-input-guide")) fail(label, "missing appliance-specific input guide");
+    calculatorPages.push({ label, shingles: shingles(visibleText(html)) });
   }
 
   for (const anchor of tags(html, "a")) {
@@ -144,6 +174,27 @@ for (const file of htmlFiles) {
     if (!target || !existsSync(target)) fail(label, `missing local image: ${src}`);
     if (!image.alt) warn(label, `image has empty alt text: ${src}`);
   }
+}
+
+let similarityTotal = 0;
+let similarityPairs = 0;
+let highestSimilarity = { score: 0, left: "", right: "" };
+for (let leftIndex = 0; leftIndex < calculatorPages.length; leftIndex += 1) {
+  for (let rightIndex = leftIndex + 1; rightIndex < calculatorPages.length; rightIndex += 1) {
+    const left = calculatorPages[leftIndex];
+    const right = calculatorPages[rightIndex];
+    const score = jaccard(left.shingles, right.shingles);
+    similarityTotal += score;
+    similarityPairs += 1;
+    if (score > highestSimilarity.score) highestSimilarity = { score, left: left.label, right: right.label };
+  }
+}
+const averageSimilarity = similarityPairs ? similarityTotal / similarityPairs : 0;
+if (highestSimilarity.score > 0.55) {
+  fail(
+    "calculator templates",
+    `5-word similarity ${(highestSimilarity.score * 100).toFixed(1)}% between ${highestSimilarity.left} and ${highestSimilarity.right}`,
+  );
 }
 
 const ogImage = join(dist, "og-wattcostguide.jpg");
@@ -176,6 +227,9 @@ if (!existsSync(sitemapFile)) {
 console.log(`\nWattCostGuide site audit`);
 console.log(`Pages: ${htmlFiles.length} (${indexablePages.length} indexable)`);
 console.log(`Links: ${internalLinkCount} internal, ${externalLinkCount} external`);
+console.log(
+  `Calculator similarity: ${(averageSimilarity * 100).toFixed(1)}% average, ${(highestSimilarity.score * 100).toFixed(1)}% maximum`,
+);
 console.log(`Warnings: ${warnings.length}`);
 for (const message of warnings) console.log(`  WARN  ${message}`);
 console.log(`Errors: ${errors.length}`);

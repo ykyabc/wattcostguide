@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
+
+const title = "Standby Power Cost: Calculate Idle and Vampire Energy Use";
+const description = "Calculate the monthly and yearly cost of standby power from TVs, computers, chargers, kitchen devices, and other equipment left plugged in.";
+const calculatorSlugs = ["tv-electricity-cost-calculator", "desktop-computer-electricity-cost-calculator", "laptop-electricity-cost-calculator", "gaming-pc-electricity-cost-calculator"];
+const calculatorLinks = appliances.filter((item) => calculatorSlugs.includes(item.slug)).map((item) => ({
+  eyebrow: item.category, title: `${item.name} Cost Calculator`, description: "Compare active use before adding standby separately.", href: `/calculators/${item.slug}/`,
+}));
+const guideLinks = guides.filter((guide) => ["how-to-measure-appliance-electricity-use", "how-to-calculate-electricity-cost", "appliance-energy-saving-tips"].includes(guide.slug)).map((guide) => ({
+  eyebrow: guide.category, title: guide.title, description: guide.description, href: `/guides/${guide.slug}/`,
+}));
+const sources = [
+  { title: "Standby Power", publisher: "Lawrence Berkeley National Laboratory", url: "https://standby.lbl.gov/" },
+  { title: "Estimating Appliance and Home Electronic Energy Use", publisher: "U.S. Department of Energy", url: "https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use" },
+];
+const articleSchema = {
+  "@context": "https://schema.org", "@type": "Article", headline: "Standby Power Cost Guide", description,
+  dateModified: "2026-06-21", author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/guides/standby-power-cost/", citation: sources.map((source) => source.url),
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides/">Guides</a></nav>
+  <section class="page-header">
+    <p class="eyebrow">Electronics</p>
+    <h1>Standby Power Cost Guide</h1>
+    <p>Standby power is the electricity a device uses while it is not performing its main job but remains ready, connected, displaying information, or communicating.</p>
+  </section>
+  <EditorialNote updated="June 21, 2026" note="Standby draw varies by model and operating state. Measure the exact device before deciding whether an automation or smart plug will save energy." />
+
+  <section class="section article-block">
+    <h2>How to calculate standby cost</h2>
+    <p>
+      Standby wattage is usually small, but idle hours can be long. Estimate the hours per day that the device is
+      in that state, then use the standard watts-to-kWh formula. Calculate active use separately so the two states
+      are not counted at the same time.
+    </p>
+    <pre><code>Standby cost = Standby watts / 1000 x Standby hours x Electricity rate</code></pre>
+    <p>At $0.18 per kWh, a continuous 5W standby load costs about $0.66 per month or $7.88 per year.</p>
+  </section>
+
+  <section class="section">
+    <h2>Example standby costs at $0.18 per kWh</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Continuous standby load</th><th>Monthly energy</th><th>Monthly cost</th><th>Yearly cost</th></tr></thead>
+      <tbody>
+        <tr><td>1W</td><td>0.72 kWh</td><td>$0.13</td><td>$1.58</td></tr>
+        <tr><td>5W</td><td>3.60 kWh</td><td>$0.65</td><td>$7.88</td></tr>
+        <tr><td>10W</td><td>7.20 kWh</td><td>$1.30</td><td>$15.77</td></tr>
+        <tr><td>25W</td><td>18.00 kWh</td><td>$3.24</td><td>$39.42</td></tr>
+      </tbody>
+    </table></div>
+    <p class="lede">These examples assume the listed load continues for 24 hours every day. Subtract active-use hours when a device has already been counted in another operating state.</p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Off, standby, idle, and sleep are different states</h2>
+    <p>
+      A television waiting for a remote command is in standby. A computer that is awake but doing little is idle
+      and usually draws more. Sleep mode saves system state while reducing power, but network wake features and
+      connected accessories can remain active. A charger with no device attached may have a very small no-load
+      draw, while a dock powering peripherals can use more.
+    </p>
+    <p>
+      Label each measured state instead of describing everything as “off.” This makes the result repeatable and
+      shows whether changing a setting is more useful than disconnecting the device.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><h2>Where to look first</h2><p>Prioritize groups of equipment and devices with network, display, or quick-start features.</p></div>
+    <div class="insight-grid">
+      <article class="insight-panel"><h3>Entertainment center</h3><p>Measure the TV, receiver, console, streaming box, soundbar, subwoofer, and powered antenna separately or as one switched group.</p></article>
+      <article class="insight-panel"><h3>Computer workspace</h3><p>Include monitors, docks, speakers, printers, external drives, and network equipment. Confirm that sleep settings actually activate.</p></article>
+      <article class="insight-panel"><h3>Kitchen controls</h3><p>Microwaves, coffee makers, and ranges may power clocks or network features. Their standby draw is separate from short high-power heating periods.</p></article>
+      <article class="insight-panel"><h3>Always-needed equipment</h3><p>Routers, security systems, medical equipment, refrigerators, and essential controls should not be disconnected merely to remove standby consumption.</p></article>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>How to measure a low standby load</h2>
+    <p>
+      Use an energy meter that can resolve low wattage. Let the device finish updates, charging, or cool-down before
+      recording its settled state. If an instant reading fluctuates or rounds to zero, accumulate energy for a day
+      or longer and divide by elapsed hours to find average watts.
+    </p>
+    <pre><code>Average standby watts = Measured kWh x 1000 / Hours measured</code></pre>
+    <p>
+      For a collection of devices on one power strip, first measure the whole strip, then disconnect one device at
+      a time if you need to identify the largest contributor.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>When switching power off makes sense</h2>
+    <p>
+      A switched power strip can help when several nonessential devices share the same usage schedule. Smart plugs
+      can automate a schedule, but the plug also consumes power, so compare its own draw with the load it controls.
+      Built-in sleep, eco, auto-off, and quick-start settings are often simpler and preserve normal operation.
+    </p>
+    <p>
+      Avoid cutting power to equipment that requires continuous operation, safe shutdown, remote access, scheduled
+      updates, temperature control, or medical reliability. Check manufacturer instructions before switching a load.
+    </p>
+  </section>
+
+  <section class="section faq-list">
+    <h2>Standby power FAQ</h2>
+    <details open><summary>Do phone chargers use electricity when no phone is connected?</summary><p>Many have a small no-load draw, but the amount varies and can be difficult to resolve on a basic meter. Measure the charger or use reliable model information before estimating savings.</p></details>
+    <details><summary>Is sleep mode the same as turning a computer off?</summary><p>No. Sleep normally uses much less than an awake computer but may still power memory, wake features, docks, or accessories. Shutdown can also retain a small standby load.</p></details>
+    <details><summary>Should I unplug every device?</summary><p>No. Start with measured, nonessential loads that stay idle for long periods. Safety, convenience, equipment requirements, and the energy used by switching devices should be considered.</p></details>
+  </section>
+
+  <section class="section article-block" aria-labelledby="sources-heading">
+    <div class="section-heading"><h2 id="sources-heading">Sources</h2><p>Research and government guidance for standby and appliance energy measurement.</p></div>
+    <ul class="source-list">{sources.map((source) => <li><a href={source.url}>{source.title}</a><span>{source.publisher}</span></li>)}</ul>
+  </section>
+  <RelatedLinks title="Compare active electronics use" description="Estimate active cost first, then add measured standby as a separate operating state." links={calculatorLinks} />
+  <RelatedLinks title="Related electricity guides" description="Measure low loads, use the cost formula, and choose practical savings actions." links={guideLinks} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

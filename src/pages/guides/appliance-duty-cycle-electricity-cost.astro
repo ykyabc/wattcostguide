@@ -1,0 +1,133 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
+
+const title = "Appliance Duty Cycle: Estimate Real Running Time and Cost";
+const description = "Learn how appliance duty cycle changes electricity cost for refrigerators, air conditioners, heaters, pumps, freezers, and other cycling loads.";
+const calculatorSlugs = [
+  "refrigerator-electricity-cost-calculator", "air-conditioner-cost-calculator",
+  "space-heater-cost-calculator", "aquarium-heater-electricity-cost-calculator",
+];
+const calculatorLinks = appliances.filter((item) => calculatorSlugs.includes(item.slug)).map((item) => ({
+  eyebrow: item.category, title: `${item.name} Cost Calculator`,
+  description: `Test active runtime with a ${item.wattsTypical}W starting estimate.`, href: `/calculators/${item.slug}/`,
+}));
+const guideLinks = guides.filter((guide) => ["how-to-measure-appliance-electricity-use", "how-to-calculate-electricity-cost", "average-appliance-wattage"].includes(guide.slug)).map((guide) => ({
+  eyebrow: guide.category, title: guide.title, description: guide.description, href: `/guides/${guide.slug}/`,
+}));
+const sources = [
+  { title: "Estimating Appliance and Home Electronic Energy Use", publisher: "U.S. Department of Energy", url: "https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use" },
+  { title: "Refrigerators", publisher: "ENERGY STAR", url: "https://www.energystar.gov/products/refrigerators" },
+  { title: "Air Conditioning", publisher: "U.S. Department of Energy", url: "https://www.energy.gov/energysaver/air-conditioning" },
+];
+const articleSchema = {
+  "@context": "https://schema.org", "@type": "Article", headline: "Appliance Duty Cycle and Running Time",
+  description, dateModified: "2026-06-21", author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/guides/appliance-duty-cycle-electricity-cost/",
+  citation: sources.map((source) => source.url),
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/guides/">Guides</a></nav>
+  <section class="page-header">
+    <p class="eyebrow">Measurement</p>
+    <h1>Appliance Duty Cycle and Running Time</h1>
+    <p>A device can be connected for 24 hours without drawing its rated watts for 24 hours. Duty cycle describes the share of time its main load is active.</p>
+  </section>
+  <EditorialNote updated="June 21, 2026" note="Duty cycle is not a fixed product specification. It changes with settings, weather, load, maintenance, and the surrounding space." />
+
+  <section class="section article-block">
+    <h2>What appliance duty cycle means</h2>
+    <p>
+      A refrigerator compressor, air conditioner, heater, or pump often switches on and off in response to a
+      thermostat, pressure switch, humidity control, or water level. A 40% duty cycle means the controlled load
+      runs for about 24 minutes during a representative hour. It does not mean the appliance uses exactly 40% of
+      rated power at every moment.
+    </p>
+    <pre><code>Active hours = Connected hours x Duty cycle</code></pre>
+    <pre><code>Cost = Watts / 1000 x Active hours x Electricity rate</code></pre>
+  </section>
+
+  <section class="section">
+    <h2>Example: a cycling refrigerator</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Input</th><th>Value</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Running power</td><td>180W</td><td>Power while the compressor is active</td></tr>
+        <tr><td>Connected time</td><td>24 hours</td><td>The refrigerator remains plugged in all day</td></tr>
+        <tr><td>Example duty cycle</td><td>33%</td><td>Illustrative assumption, not a universal refrigerator value</td></tr>
+        <tr><td>Equivalent active time</td><td>8 hours</td><td>24 hours x 0.33, rounded</td></tr>
+        <tr><td>Daily cost at $0.18/kWh</td><td>$0.26</td><td>180 / 1000 x 8 x $0.18</td></tr>
+      </tbody>
+    </table></div>
+    <p class="lede">The same refrigerator entered as 180W for 24 full hours would produce $0.78 per day, illustrating why connected time and active time should not be confused.</p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Loads that commonly cycle</h2>
+    <p>
+      Refrigerators and freezers cycle compressors and may add defrost heaters. Air conditioners, heat pumps,
+      dehumidifiers, and portable AC units respond to temperature or humidity. Tank water heaters, space heaters,
+      electric blankets, irons, ovens, and aquarium heaters cycle resistance elements. Sump and pool pumps cycle or
+      follow schedules for entirely different reasons.
+    </p>
+    <p>
+      Each case needs the same basic distinction: identify which component creates the major load, then estimate
+      how long that component actually operates. Small fans, controls, or displays may continue drawing power while
+      the compressor or element is off.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><h2>Three ways to estimate active runtime</h2><p>Use the most direct evidence available for your appliance.</p></div>
+    <div class="insight-grid">
+      <article class="insight-panel"><h3>Observe the indicator</h3><p>Time compressor, burner, element, or pump operation across several normal cycles. This is simple but requires representative conditions.</p></article>
+      <article class="insight-panel"><h3>Measure accumulated kWh</h3><p>A compatible energy meter captures cycling automatically. Divide measured kWh by running kilowatts to estimate equivalent full-power hours.</p></article>
+      <article class="insight-panel"><h3>Use equipment records</h3><p>Smart thermostats, EV chargers, pumps, and modern HVAC controls may report runtime or energy. Confirm what each metric includes.</p></article>
+      <article class="insight-panel"><h3>Use annual kWh</h3><p>For labeled appliances, annual kWh can bypass the duty-cycle guess. Multiply the label value by your rate for an annual planning estimate.</p></article>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Why duty cycle changes</h2>
+    <p>
+      Temperature difference is a major driver. A refrigerator in a hot garage, an aquarium in a cold room, or an
+      air conditioner during a heat wave may run longer. Insulation, seals, airflow, filters, frost, equipment size,
+      thermostat settings, and how often doors are opened also matter.
+    </p>
+    <p>
+      Avoid using one extreme day as a yearly average. Keep separate mild-weather and peak-season scenarios, then
+      weight them by the number of months or days when each condition is plausible.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>When duty cycle is not enough</h2>
+    <p>
+      Variable-speed compressors, inverter air conditioners, computers, and electronically controlled motors may
+      modulate power instead of switching between one fixed wattage and zero. For these loads, accumulated kWh is
+      more reliable than a simple on/off percentage. Multi-stage equipment may also need separate wattage and
+      runtime estimates for each stage.
+    </p>
+  </section>
+
+  <section class="section faq-list">
+    <h2>Duty cycle FAQ</h2>
+    <details open><summary>Is duty cycle the same every day?</summary><p>No. It can change with weather, room conditions, settings, load, maintenance, and user behavior.</p></details>
+    <details><summary>Should I enter 24 hours for an always-plugged-in appliance?</summary><p>Only if the watts input represents its average draw across the day. If you enter compressor or heater running watts, use equivalent active hours instead.</p></details>
+    <details><summary>How do I convert measured kWh to active hours?</summary><p>Divide measured kWh by running kilowatts. A device using 1.2 kWh with a 0.15 kW running load has about eight equivalent full-power hours.</p></details>
+  </section>
+
+  <section class="section article-block" aria-labelledby="sources-heading">
+    <div class="section-heading"><h2 id="sources-heading">Sources</h2><p>Government and ENERGY STAR context for estimating cycling appliance energy.</p></div>
+    <ul class="source-list">{sources.map((source) => <li><a href={source.url}>{source.title}</a><span>{source.publisher}</span></li>)}</ul>
+  </section>
+  <RelatedLinks title="Try a cycling appliance calculator" description="Compare active runtime assumptions for common thermostatic and intermittent loads." links={calculatorLinks} />
+  <RelatedLinks title="Related measurement guides" description="Measure the input, understand the formula, and compare wattage ranges." links={guideLinks} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

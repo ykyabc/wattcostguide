@@ -8,7 +8,7 @@ const staticPages = [
   { path: "/", lastmod: "2026-06-20" },
   { path: "/calculators/", lastmod: "2026-06-17" },
   { path: "/calculators/categories/", lastmod: "2026-06-17" },
-  { path: "/guides/", lastmod: "2026-06-17" },
+  { path: "/guides/", lastmod: "2026-06-21" },
   { path: "/about/", lastmod: "2026-06-21" },
   { path: "/references/", lastmod: "2026-06-20" },
   { path: "/editorial-policy/", lastmod: "2026-06-21" },
@@ -22,7 +22,7 @@ const defaultLastmod = "2026-06-17";
 export function GET() {
   const urls = [
     ...staticPages,
-    ...guides.map((guide) => ({ path: `/guides/${guide.slug}/`, lastmod: defaultLastmod })),
+    ...guides.map((guide) => ({ path: `/guides/${guide.slug}/`, lastmod: guide.updated })),
     ...calculatorCategories.map((category) => ({
       path: `/calculators/category/${category.slug}/`,
       lastmod: defaultLastmod,

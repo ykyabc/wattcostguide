@@ -18,6 +18,8 @@ const popularCalculatorLinks = appliances
     description: `${appliance.wattsTypical}W typical estimate`,
     href: `/calculators/${appliance.slug}/`,
   }));
+const pillarGuides = guides.filter((guide) => guide.pillar);
+const supportingGuides = guides.filter((guide) => !guide.pillar);
 const itemListSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -41,8 +43,28 @@ const itemListSchema = {
     <p>Simple explanations for the numbers behind appliance running costs.</p>
   </section>
   <section class="section">
+    <div class="section-heading">
+      <h2>Core measurement guides</h2>
+      <p>Start here when you need better inputs than a generic wattage estimate.</p>
+    </div>
     <div class="card-grid">
-      {guides.map((guide) => (
+      {pillarGuides.map((guide) => (
+        <a class="card" href={`/guides/${guide.slug}/`}>
+          <span>{guide.category}</span>
+          <strong>{guide.title}</strong>
+          <small>{guide.description}</small>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Electricity cost fundamentals</h2>
+      <p>Use these supporting guides for formulas, rates, wattage ranges, and practical savings.</p>
+    </div>
+    <div class="card-grid">
+      {supportingGuides.map((guide) => (
         <a class="card" href={`/guides/${guide.slug}/`}>
           <span>{guide.category}</span>
           <strong>{guide.title}</strong>

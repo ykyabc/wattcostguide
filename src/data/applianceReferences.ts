@@ -151,12 +151,14 @@ const referenceMetadata: Record<string, ApplianceReferenceMetadata> = {
   "aquarium-heater-electricity-cost-calculator": { updated: "2026-06-20", sourceKeys: [] },
 };
 
+const calculatorContentRevision = "2026-06-21";
+
 export function getApplianceReferences(slug: string) {
   const metadata = referenceMetadata[slug];
   if (!metadata) throw new Error(`Missing reference metadata for appliance: ${slug}`);
 
   return {
-    updated: metadata.updated,
+    updated: metadata.updated > calculatorContentRevision ? metadata.updated : calculatorContentRevision,
     sources: [...commonSourceKeys, ...metadata.sourceKeys].map((key) => sourceCatalog[key]),
   };
 }

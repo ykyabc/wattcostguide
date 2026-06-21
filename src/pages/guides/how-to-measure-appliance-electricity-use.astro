@@ -1,0 +1,173 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import { appliances } from "../../data/appliances";
+import { guides } from "../../data/guides";
+
+const title = "How to Measure Appliance Electricity Use Accurately";
+const description = "Learn four ways to measure appliance electricity use: nameplate watts, plug-in energy meters, EnergyGuide labels, and utility or circuit monitoring.";
+const updated = "June 21, 2026";
+const calculatorSlugs = [
+  "refrigerator-electricity-cost-calculator",
+  "gaming-pc-electricity-cost-calculator",
+  "space-heater-cost-calculator",
+  "air-fryer-electricity-cost-calculator",
+];
+const calculatorLinks = appliances.filter((item) => calculatorSlugs.includes(item.slug)).map((item) => ({
+  eyebrow: item.category,
+  title: `${item.name} Cost Calculator`,
+  description: `Replace the ${item.wattsTypical}W default with your measured value.`,
+  href: `/calculators/${item.slug}/`,
+}));
+const guideLinks = guides.filter((guide) => [
+  "appliance-duty-cycle-electricity-cost",
+  "standby-power-cost",
+  "how-to-calculate-electricity-cost",
+].includes(guide.slug)).map((guide) => ({
+  eyebrow: guide.category,
+  title: guide.title,
+  description: guide.description,
+  href: `/guides/${guide.slug}/`,
+}));
+const sources = [
+  {
+    title: "Estimating Appliance and Home Electronic Energy Use",
+    publisher: "U.S. Department of Energy",
+    url: "https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use",
+  },
+  {
+    title: "EnergyGuide Labels",
+    publisher: "Federal Trade Commission",
+    url: "https://consumer.ftc.gov/articles/how-use-yellow-energyguide-label-shop-home-appliances",
+  },
+];
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "How to Measure Appliance Electricity Use",
+  description,
+  dateModified: "2026-06-21",
+  author: { "@type": "Organization", name: "WattCostGuide" },
+  publisher: { "@type": "Organization", name: "WattCostGuide" },
+  mainEntityOfPage: "https://wattcostguide.com/guides/how-to-measure-appliance-electricity-use/",
+  citation: sources.map((source) => source.url),
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>/</span><a href="/guides/">Guides</a>
+  </nav>
+
+  <section class="page-header">
+    <p class="eyebrow">Measurement</p>
+    <h1>How to Measure Appliance Electricity Use</h1>
+    <p>The right method depends on whether the appliance plugs into an outlet, cycles on and off, or is wired directly into your home.</p>
+  </section>
+
+  <EditorialNote updated={updated} note="Measurements taken over a representative period are usually more useful than a single instant watt reading." />
+
+  <section class="section article-block">
+    <h2>Choose the measurement that matches the appliance</h2>
+    <p>
+      A wattage label is fast, but it may show maximum power rather than average use. A plug-in meter can capture
+      changing loads over time, while an EnergyGuide label can be more useful for appliances tested over a typical
+      year. Hardwired equipment may require circuit-level data or readings supplied by the equipment itself.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th>Best for</th><th>Main limitation</th></tr></thead>
+        <tbody>
+          <tr><td>Nameplate or manual</td><td>Quick planning and steady loads</td><td>May show a maximum rating</td></tr>
+          <tr><td>Plug-in energy meter</td><td>120V plug-in appliances and electronics</td><td>Not for hardwired or incompatible high-power loads</td></tr>
+          <tr><td>EnergyGuide annual kWh</td><td>Comparing major appliance models</td><td>Standard test use may differ from your household</td></tr>
+          <tr><td>Smart panel, submeter, or equipment log</td><td>HVAC, EV charging, pumps, and hardwired loads</td><td>Setup and data access vary</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section article-block">
+    <h2>Method 1: read the nameplate</h2>
+    <p>
+      Look on the rear, underside, door frame, power adapter, or inside the manual. If watts are listed, use that
+      value as a starting point. If the label lists volts and amps, multiplying them gives an approximate upper
+      input for many simple household calculations.
+    </p>
+    <pre><code>Approximate watts = Volts x Amps</code></pre>
+    <p>
+      This shortcut is less precise for some motors and electronic equipment because power factor and variable
+      operation matter. It also does not tell you how long a thermostat, compressor, or heating element stays on.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Method 2: use a plug-in electricity meter</h2>
+    <p>
+      Connect the meter to the outlet, then plug the appliance into the meter. Confirm that the meter and outlet
+      are rated for the appliance. An instant watts screen is useful for steady devices, but accumulated kWh is
+      better for refrigerators, computers, dehumidifiers, and other variable loads.
+    </p>
+    <p>
+      Reset the meter before testing. Measure a normal operating period: one complete cooking session, several
+      computer workloads, or at least 24 to 72 hours for a cycling appliance. Record both elapsed time and kWh.
+      Multiply measured kWh by your electricity rate to get the cost for that period.
+    </p>
+    <pre><code>Measured cost = Meter kWh x Electricity rate</code></pre>
+  </section>
+
+  <section class="section article-block">
+    <h2>Method 3: use annual kWh from an EnergyGuide label</h2>
+    <p>
+      The yellow EnergyGuide label gives estimated annual energy use for covered products under standardized test
+      assumptions. It is often more representative than nameplate watts for refrigerators, freezers, dishwashers,
+      clothes washers, and similar appliances whose power changes during a cycle.
+    </p>
+    <p>
+      Multiply annual kWh by your rate for yearly cost, then divide by 12 for a monthly planning figure. Your result
+      can differ because of climate, settings, household size, maintenance, and actual usage frequency.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Method 4: measure hardwired and high-power equipment</h2>
+    <p>
+      Central HVAC, electric water heaters, pool pumps, ranges, and many EV chargers cannot be placed on a normal
+      plug-in meter. Check whether the thermostat, charger, inverter, smart electrical panel, or utility portal
+      reports energy by device or circuit. A qualified electrician can advise on permanent submeters or current
+      sensors when direct circuit measurement is needed.
+    </p>
+    <p>
+      Do not open an electrical panel or improvise a connection solely to obtain a reading. Manufacturer energy
+      logs, run-hour records, and equipment specifications can still produce a useful estimate without direct work
+      on energized wiring.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><h2>A practical test plan</h2><p>Use the shortest test that still captures normal behavior.</p></div>
+    <div class="checklist-grid">
+      <article class="checklist-panel"><span>Before</span><h2>Define the question</h2><ul><li>Choose the mode or setting to test.</li><li>Write down your electricity rate.</li><li>Reset accumulated kWh.</li></ul></article>
+      <article class="checklist-panel"><span>During</span><h2>Capture representative use</h2><ul><li>Include warm-up and cool-down when relevant.</li><li>Let cycling equipment complete multiple cycles.</li><li>Avoid unusual test-day conditions.</li></ul></article>
+      <article class="checklist-panel"><span>After</span><h2>Normalize the result</h2><ul><li>Calculate kWh per session or day.</li><li>Multiply by sessions or days per month.</li><li>Keep seasonal estimates separate.</li></ul></article>
+      <article class="checklist-panel"><span>Compare</span><h2>Test one change</h2><ul><li>Try a different temperature or speed.</li><li>Measure standby separately.</li><li>Use the same test duration for comparisons.</li></ul></article>
+    </div>
+  </section>
+
+  <section class="section faq-list">
+    <h2>Measuring appliance electricity FAQ</h2>
+    <details open><summary>How long should I measure an appliance?</summary><p>Measure long enough to capture normal variation. Minutes may be enough for a kettle, while a refrigerator or dehumidifier should usually be observed for at least a full day and preferably longer.</p></details>
+    <details><summary>Is the wattage on the label the actual wattage?</summary><p>Not always. It may be a rated or maximum input. An energy meter shows actual wall draw under the setting and conditions being tested.</p></details>
+    <details><summary>Can a smart plug measure every appliance?</summary><p>No. Use one only within its voltage, current, and load ratings. High-power, motor, hardwired, and 240V equipment may require a different approved measurement method.</p></details>
+  </section>
+
+  <section class="section article-block" aria-labelledby="sources-heading">
+    <div class="section-heading"><h2 id="sources-heading">Sources</h2><p>Primary consumer and government guidance used for this measurement overview.</p></div>
+    <ul class="source-list">{sources.map((source) => <li><a href={source.url}>{source.title}</a><span>{source.publisher}</span></li>)}</ul>
+  </section>
+
+  <RelatedLinks title="Put measured values into a calculator" description="Replace generic defaults with readings from your own equipment." links={calculatorLinks} />
+  <RelatedLinks title="Continue with measurement fundamentals" description="Handle cycling loads, standby power, and the cost formula." links={guideLinks} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>
