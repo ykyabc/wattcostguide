@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EditorialNote from "../components/EditorialNote.astro";
+---
+
+<BaseLayout
+  title="Corrections Policy - WattCostGuide"
+  description="How to report a WattCostGuide error and how calculator, source, and editorial corrections are reviewed and documented."
+>
+  <section class="page-header">
+    <p class="eyebrow">Accuracy and transparency</p>
+    <h1>Corrections Policy</h1>
+    <p>How WattCostGuide reviews reported errors and updates calculations, sources, and explanatory content.</p>
+  </section>
+
+  <EditorialNote
+    updated="June 21, 2026"
+    note="Correction requests are reviewed against the calculation formula and the most relevant reliable source available."
+  />
+
+  <section class="section article-block">
+    <h2>How to report an issue</h2>
+    <p>
+      Email <a href="mailto:hello@wattcostguide.com">hello@wattcostguide.com</a> with the page URL, the value or
+      statement that appears incorrect, the expected correction, and a supporting source when available. For a
+      calculator issue, include the watts, hours, electricity rate, and result you received.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>How reports are reviewed</h2>
+    <p>
+      We reproduce calculation reports using the displayed formula, then compare factual reports with appliance
+      labels, manuals, manufacturer specifications, government energy resources, or other authoritative material.
+      A single model may not justify changing a range intended to cover a broader appliance category.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Minor and material corrections</h2>
+    <p>
+      Spelling, formatting, and broken-link repairs may be made without a correction notice when they do not change
+      meaning. A material correction changes a calculation, default assumption, wattage range, source attribution,
+      or conclusion that could affect a reader's estimate.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>How updates are documented</h2>
+    <p>
+      When a calculator receives a substantive review, its independent last-reviewed date is updated. Material
+      corrections that require additional context will be noted on the affected page or documented here. There are
+      currently no published material correction notices.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Response limits</h2>
+    <p>
+      WattCostGuide can review site content but cannot resolve utility account disputes, verify household wiring,
+      diagnose appliances, or provide individualized engineering or financial advice.
+    </p>
+  </section>
+</BaseLayout>

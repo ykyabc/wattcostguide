@@ -91,6 +91,18 @@ for (const file of htmlFiles) {
   }
   if (metaContent(html, "twitter:card") !== "summary_large_image") fail(label, "missing large Twitter card");
   if (!metaContent(html, "twitter:image")) fail(label, "missing twitter:image");
+  if (!html.includes('"@type":"Organization"') || !html.includes('"@type":"WebSite"')) {
+    fail(label, "missing Organization or WebSite schema");
+  }
+  const jsonLdBlocks = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  if (!jsonLdBlocks.length) fail(label, "missing JSON-LD");
+  for (const [, jsonLd] of jsonLdBlocks) {
+    try {
+      JSON.parse(jsonLd);
+    } catch {
+      fail(label, "contains invalid JSON-LD");
+    }
+  }
   if (is404 && !robots.toLowerCase().includes("noindex")) fail(label, "404 page must be noindex");
   if (/initial WattCostGuide launch|\$0\.17(?:\/kWh| per kWh)/i.test(html)) fail(label, "contains stale launch or rate copy");
 
@@ -136,6 +148,10 @@ for (const file of htmlFiles) {
 
 const ogImage = join(dist, "og-wattcostguide.jpg");
 if (!existsSync(ogImage) || statSync(ogImage).size < 10_000) fail("dist/", "OG image is missing or unexpectedly small");
+
+for (const requiredPage of ["editorial-policy/index.html", "corrections/index.html"]) {
+  if (!existsSync(join(dist, requiredPage))) fail("dist/", `required trust page is missing: ${requiredPage}`);
+}
 
 const robotsFile = join(dist, "robots.txt");
 if (!existsSync(robotsFile)) fail("dist/", "robots.txt is missing");

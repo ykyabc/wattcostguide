@@ -16,6 +16,33 @@ const {
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://wattcostguide.com");
 const ogImageUrl = new URL(ogImage, Astro.site ?? "https://wattcostguide.com");
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://wattcostguide.com/#organization",
+      name: "WattCostGuide",
+      url: "https://wattcostguide.com/",
+      email: "hello@wattcostguide.com",
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "editorial corrections",
+        email: "hello@wattcostguide.com",
+        availableLanguage: "English",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://wattcostguide.com/#website",
+      url: "https://wattcostguide.com/",
+      name: "WattCostGuide",
+      description: "Appliance electricity cost calculators and practical home energy guides.",
+      publisher: { "@id": "https://wattcostguide.com/#organization" },
+      inLanguage: "en-US",
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -45,6 +72,7 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? "https://wattcostguide.com");
     <meta name="twitter:image:alt" content={ogImageAlt} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="application/ld+json" set:html={JSON.stringify(siteSchema)} />
     <script is:inline>
       let savedTheme;
       try {
@@ -80,6 +108,8 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? "https://wattcostguide.com");
       <p>WattCostGuide helps estimate appliance running costs using watts, hours, and electricity rates.</p>
       <nav aria-label="Footer navigation">
         <a href="/references/">References</a>
+        <a href="/editorial-policy/">Editorial Policy</a>
+        <a href="/corrections/">Corrections</a>
         <a href="/privacy-policy/">Privacy</a>
         <a href="/terms/">Terms</a>
         <a href="/contact/">Contact</a>

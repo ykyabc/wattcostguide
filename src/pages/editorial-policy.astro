@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EditorialNote from "../components/EditorialNote.astro";
+---
+
+<BaseLayout
+  title="Editorial Policy - WattCostGuide"
+  description="How WattCostGuide researches, calculates, sources, reviews, and updates appliance electricity cost content."
+>
+  <section class="page-header">
+    <p class="eyebrow">Editorial standards</p>
+    <h1>Editorial Policy</h1>
+    <p>How WattCostGuide builds practical estimates while keeping formulas, assumptions, and sources visible.</p>
+  </section>
+
+  <EditorialNote
+    updated="June 21, 2026"
+    note="This policy applies to WattCostGuide calculators, guides, category pages, and supporting methodology content."
+  />
+
+  <section class="section article-block">
+    <h2>Purpose and scope</h2>
+    <p>
+      WattCostGuide publishes educational calculators and guides that help readers estimate appliance electricity
+      use and running cost. Results are planning estimates, not utility billing, engineering, financial, or product
+      purchase advice.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Calculation standards</h2>
+    <p>
+      Cost estimates use the same visible formula across the site. Watts are converted to kilowatts, multiplied by
+      runtime, and then multiplied by the electricity rate entered by the reader.
+    </p>
+    <pre><code>Cost = Watts / 1000 x Hours Used x Electricity Rate</code></pre>
+    <p>
+      Default wattage, runtime, and rate values are starting points. Readers are encouraged to replace them with
+      an appliance nameplate, product manual, power-meter reading, and their own utility rate.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Sources</h2>
+    <p>
+      We prefer first-party and authoritative sources such as the U.S. Energy Information Administration, U.S.
+      Department of Energy, ENERGY STAR, utility documentation, appliance labels, owner manuals, and manufacturer
+      specifications. Calculator pages identify the sources used for their method and operating context.
+    </p>
+    <p><a class="text-link" href="/references/">Review the site methodology and primary references</a>.</p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Review and update dates</h2>
+    <p>
+      Calculator pages carry an independent last-reviewed date. A date changes when the page's assumptions,
+      sources, calculation examples, or substantive explanations are reviewed. Minor formatting changes alone do
+      not imply that every factual claim was newly reviewed.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Advertising independence</h2>
+    <p>
+      Advertising does not determine calculator results, wattage assumptions, conclusions, or source selection.
+      Sponsored placement, if introduced, will be labeled and kept separate from editorial calculations.
+    </p>
+  </section>
+
+  <section class="section article-block">
+    <h2>Corrections and reader feedback</h2>
+    <p>
+      Readers can report unclear assumptions, broken sources, calculation issues, or appliance specifications.
+      Substantive corrections are reviewed against reliable documentation and handled under the corrections policy.
+    </p>
+    <p><a class="text-link" href="/corrections/">Read the corrections policy</a>.</p>
+  </section>
+</BaseLayout>

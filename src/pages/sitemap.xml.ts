@@ -5,24 +5,23 @@ import { getApplianceReferences } from "../data/applianceReferences";
 
 const site = "https://wattcostguide.com";
 const staticPages = [
-  "/",
-  "/calculators/",
-  "/calculators/categories/",
-  "/guides/",
-  "/about/",
-  "/references/",
-  "/contact/",
-  "/privacy-policy/",
-  "/terms/",
+  { path: "/", lastmod: "2026-06-20" },
+  { path: "/calculators/", lastmod: "2026-06-17" },
+  { path: "/calculators/categories/", lastmod: "2026-06-17" },
+  { path: "/guides/", lastmod: "2026-06-17" },
+  { path: "/about/", lastmod: "2026-06-21" },
+  { path: "/references/", lastmod: "2026-06-20" },
+  { path: "/editorial-policy/", lastmod: "2026-06-21" },
+  { path: "/corrections/", lastmod: "2026-06-21" },
+  { path: "/contact/", lastmod: "2026-06-17" },
+  { path: "/privacy-policy/", lastmod: "2026-06-17" },
+  { path: "/terms/", lastmod: "2026-06-17" },
 ];
 const defaultLastmod = "2026-06-17";
 
 export function GET() {
   const urls = [
-    ...staticPages.map((path) => ({
-      path,
-      lastmod: path === "/" ? "2026-06-20" : defaultLastmod,
-    })),
+    ...staticPages,
     ...guides.map((guide) => ({ path: `/guides/${guide.slug}/`, lastmod: defaultLastmod })),
     ...calculatorCategories.map((category) => ({
       path: `/calculators/category/${category.slug}/`,
