@@ -9,6 +9,7 @@
   --brand: #1f7a5b;
   --brand-dark: #13533d;
   --accent: #f2b84b;
+  --danger: #a52a2a;
   --code-bg: #10221b;
   --code-ink: #f6fff9;
   --shadow: 0 18px 45px rgba(23, 33, 38, 0.07);
@@ -25,6 +26,7 @@ html[data-theme="dark"] {
   --brand: #73d9a8;
   --brand-dark: #b1f2cf;
   --accent: #f5c76d;
+  --danger: #ff9b91;
   --code-bg: #07100d;
   --code-ink: #e9fff2;
   --shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
@@ -45,6 +47,11 @@ body {
 
 a {
   color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
 
 [hidden] {
@@ -256,6 +263,19 @@ input {
   background: var(--paper);
   color: var(--ink);
   font: inherit;
+}
+
+input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.calculator-error {
+  border-left: 4px solid var(--danger);
+  margin: 14px 0 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding-left: 12px;
 }
 
 .preset-row {
@@ -569,9 +589,16 @@ pre {
 
 .table-wrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
 }
 
 table {

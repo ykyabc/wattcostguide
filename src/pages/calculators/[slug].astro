@@ -417,6 +417,10 @@ const breadcrumbSchema = {
       section.addEventListener("calculator:update", (event) => {
         const detail = (event as CustomEvent).detail;
         if (!detail) return;
+        if (detail.valid === false) {
+          if (dailyCost) dailyCost.textContent = "--";
+          return;
+        }
         if (dailyCost) dailyCost.textContent = moneyFormatter.format(detail.dailyCost);
         if (watts) watts.textContent = numberFormatter.format(detail.watts);
         if (hours) hours.textContent = numberFormatter.format(detail.hours);

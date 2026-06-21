@@ -14,7 +14,7 @@ const staticPages = [
   { path: "/editorial-policy/", lastmod: "2026-06-21" },
   { path: "/corrections/", lastmod: "2026-06-21" },
   { path: "/contact/", lastmod: "2026-06-17" },
-  { path: "/privacy-policy/", lastmod: "2026-06-17" },
+  { path: "/privacy-policy/", lastmod: "2026-06-21" },
   { path: "/terms/", lastmod: "2026-06-17" },
 ];
 const defaultLastmod = "2026-06-17";

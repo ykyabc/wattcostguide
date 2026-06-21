@@ -200,6 +200,19 @@ if (highestSimilarity.score > 0.55) {
 const ogImage = join(dist, "og-wattcostguide.jpg");
 if (!existsSync(ogImage) || statSync(ogImage).size < 10_000) fail("dist/", "OG image is missing or unexpectedly small");
 
+const middlewareFile = join(root, "functions", "_middleware.ts");
+if (!existsSync(middlewareFile)) {
+  fail("functions/", "security middleware is missing");
+} else {
+  const middleware = readFileSync(middlewareFile, "utf8");
+  if (!middleware.includes("https://static.cloudflareinsights.com")) {
+    fail("functions/_middleware.ts", "Cloudflare Web Analytics script is blocked by CSP");
+  }
+  if (!middleware.includes("https://cloudflareinsights.com")) {
+    fail("functions/_middleware.ts", "Cloudflare Web Analytics reporting is blocked by CSP");
+  }
+}
+
 for (const requiredPage of ["editorial-policy/index.html", "corrections/index.html"]) {
   if (!existsSync(join(dist, requiredPage))) fail("dist/", `required trust page is missing: ${requiredPage}`);
 }

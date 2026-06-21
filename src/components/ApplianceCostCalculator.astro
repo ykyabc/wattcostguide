@@ -24,17 +24,19 @@ const ratePresets = [0.12, 0.18, 0.25, 0.35];
   <div class="field-grid">
     <label>
       <span>Watts</span>
-      <input data-watts type="number" min="0" step="1" value={defaultWatts} />
+      <input data-watts type="number" min="0" step="1" inputmode="decimal" value={defaultWatts} />
     </label>
     <label>
       <span>Hours per day</span>
-      <input data-hours type="number" min="0" step="0.25" value={defaultHours} />
+      <input data-hours type="number" min="0" max="24" step="0.25" inputmode="decimal" value={defaultHours} />
     </label>
     <label>
       <span>Electricity rate ($/kWh)</span>
-      <input data-rate type="number" min="0" step="0.01" value={defaultRate} />
+      <input data-rate type="number" min="0" step="0.01" inputmode="decimal" value={defaultRate} />
     </label>
   </div>
+
+  <p class="calculator-error" data-calculator-error role="alert" hidden></p>
 
   <div class="preset-row" aria-label="Common electricity rate presets">
     {ratePresets.map((rate) => (
@@ -81,6 +83,7 @@ const ratePresets = [0.12, 0.18, 0.25, 0.35];
     const year = calculator.querySelector<HTMLElement>("[data-year]");
     const presetButtons = calculator.querySelectorAll<HTMLButtonElement>("[data-rate-preset]");
     const resetButton = calculator.querySelector<HTMLButtonElement>("[data-reset-calculator]");
+    const errorMessage = calculator.querySelector<HTMLElement>("[data-calculator-error]");
 
     const setActivePreset = () => {
       presetButtons.forEach((button) => {
@@ -90,8 +93,38 @@ const ratePresets = [0.12, 0.18, 0.25, 0.35];
 
     const update = () => {
       if (!watts || !hours || !rate || !kwh || !day || !month || !year) return;
-      const dailyKwh = (Number(watts.value) / 1000) * Number(hours.value);
-      const dailyCost = dailyKwh * Number(rate.value);
+      const wattsValue = Number(watts.value);
+      const hoursValue = Number(hours.value);
+      const rateValue = Number(rate.value);
+      const errors = [
+        !Number.isFinite(wattsValue) || wattsValue < 0 ? "Enter watts as zero or a positive number." : "",
+        !Number.isFinite(hoursValue) || hoursValue < 0 || hoursValue > 24
+          ? "Enter daily runtime between 0 and 24 hours."
+          : "",
+        !Number.isFinite(rateValue) || rateValue < 0 ? "Enter an electricity rate of zero or more." : "",
+      ].filter(Boolean);
+
+      watts.setAttribute("aria-invalid", String(!Number.isFinite(wattsValue) || wattsValue < 0));
+      hours.setAttribute("aria-invalid", String(!Number.isFinite(hoursValue) || hoursValue < 0 || hoursValue > 24));
+      rate.setAttribute("aria-invalid", String(!Number.isFinite(rateValue) || rateValue < 0));
+
+      if (errorMessage) {
+        errorMessage.textContent = errors.join(" ");
+        errorMessage.hidden = errors.length === 0;
+      }
+
+      if (errors.length > 0) {
+        kwh.textContent = "-- kWh/day";
+        day.textContent = "--";
+        month.textContent = "--";
+        year.textContent = "--";
+        setActivePreset();
+        calculator.dispatchEvent(new CustomEvent("calculator:update", { bubbles: true, detail: { valid: false } }));
+        return;
+      }
+
+      const dailyKwh = (wattsValue / 1000) * hoursValue;
+      const dailyCost = dailyKwh * rateValue;
       kwh.textContent = formatKwh(dailyKwh);
       day.textContent = formatMoney(dailyCost);
       month.textContent = formatMoney(dailyCost * 30);
@@ -101,9 +134,10 @@ const ratePresets = [0.12, 0.18, 0.25, 0.35];
         new CustomEvent("calculator:update", {
           bubbles: true,
           detail: {
-            watts: Number(watts.value),
-            hours: Number(hours.value),
-            rate: Number(rate.value),
+            valid: true,
+            watts: wattsValue,
+            hours: hoursValue,
+            rate: rateValue,
             dailyCost,
             dailyKwh,
           },
