@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { appliances } from "../data/appliances";
+import { calculatorCategories } from "../data/categories";
+import { guides } from "../data/guides";
+
+const trustPages = [
+  { title: "About", href: "/about/" },
+  { title: "References", href: "/references/" },
+  { title: "Editorial Policy", href: "/editorial-policy/" },
+  { title: "Corrections", href: "/corrections/" },
+  { title: "Contact", href: "/contact/" },
+  { title: "Privacy Policy", href: "/privacy-policy/" },
+  { title: "Terms", href: "/terms/" },
+];
+---
+
+<BaseLayout
+  title="Sitemap: WattCostGuide Calculators and Guides"
+  description="Browse every WattCostGuide appliance electricity cost calculator, category page, guide, and site information page from one sitemap."
+>
+  <section class="page-header">
+    <p class="eyebrow">Sitemap</p>
+    <h1>All WattCostGuide Pages</h1>
+    <p>Use this page to find every appliance electricity cost calculator, guide, category, and site information page.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Main pages</h2>
+      <p>Start with the calculator library, guides, or category overview.</p>
+    </div>
+    <div class="link-list">
+      <a href="/">Home <span>Appliance cost calculator overview</span></a>
+      <a href="/calculators/">Calculators <span>Full calculator library</span></a>
+      <a href="/calculators/categories/">Calculator Categories <span>Browse by appliance type</span></a>
+      <a href="/guides/">Guides <span>Electricity cost basics</span></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Calculator categories</h2>
+      <p>Category pages group similar appliances for easier comparison.</p>
+    </div>
+    <div class="link-list">
+      {calculatorCategories.map((category) => (
+        <a href={`/calculators/category/${category.slug}/`}>
+          {category.name}
+          <span>{category.appliances.length} calculators</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Appliance calculators</h2>
+      <p>Open a calculator to estimate daily, monthly, and yearly running cost.</p>
+    </div>
+    <div class="link-list">
+      {appliances.map((appliance) => (
+        <a href={`/calculators/${appliance.slug}/`}>
+          {appliance.name} Cost Calculator
+          <span>{appliance.category}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Guides</h2>
+      <p>These pages explain watts, kWh, rates, measurements, and practical energy-saving choices.</p>
+    </div>
+    <div class="link-list">
+      {guides.map((guide) => (
+        <a href={`/guides/${guide.slug}/`}>
+          {guide.title}
+          <span>{guide.category}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Site information</h2>
+      <p>Editorial, reference, contact, and policy pages.</p>
+    </div>
+    <div class="link-list">
+      {trustPages.map((page) => (
+        <a href={page.href}>{page.title}</a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

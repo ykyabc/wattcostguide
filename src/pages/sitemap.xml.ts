@@ -9,6 +9,7 @@ const staticPages = [
   { path: "/calculators/", lastmod: "2026-06-17" },
   { path: "/calculators/categories/", lastmod: "2026-06-17" },
   { path: "/guides/", lastmod: "2026-06-21" },
+  { path: "/sitemap/", lastmod: "2026-06-26" },
   { path: "/about/", lastmod: "2026-06-21" },
   { path: "/references/", lastmod: "2026-06-20" },
   { path: "/editorial-policy/", lastmod: "2026-06-21" },
